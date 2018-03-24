@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import { loadPosts } from '../actions'
 import { setTitle } from '../../common/actions'
-// import PublicLayout from '../hoc/PublicLayout'
+import PublicLayout from '../hoc/PublicLayout'
 import Spinner from '../../common/components/Spinner'
 
 class PostListPage extends Component {
@@ -43,7 +43,7 @@ PostListPage.propTypes = {
 
 
 export default compose(
-  // PublicLayout,
+  PublicLayout,
   connect(
     state => ({
       postsLoaded: state.common.request.loadPosts,

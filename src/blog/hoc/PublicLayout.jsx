@@ -1,73 +1,79 @@
-import styles from './PublicLayout.scss'
-import 'bootstrap/dist/css/bootstrap.css'
-import $ from 'jquery'
-import logo from './logo.png'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
+import { connect } from 'react-redux'
+import $ from 'jquery'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import MuiTheme from './mui-theme'
-import withErrorBoundary from '../../common/components/withErrorBoundary'
+import './PublicLayout/styles.css'
 import Alert from '../../common/components/Alert'
-import ErrorPage from '../pages/ErrorPage'
+import ErrorBoundary from '../../common/hoc/ErrorBoundary'
+import ErrorPage from '../components/ErrorPage'
+import TopNav from './PublicLayout/TopNav'
+import Search from './PublicLayout/Search'
+import CategoryNav from './PublicLayout/CategoryNav'
 
-function withPublicLayout(WrappedComponent) {
+function PublicLayout(WrappedComponent) {
 
-  class PublicLayout extends Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        title: ''
-      }
-    }
+  class Wrapper extends Component {
 
     componentDidMount() {
-      $('body').addClass(styles.wrapper)
+      $('html').addClass('pub-layout')
     }
 
     componentWillUnmount() {
-      $('body').removeClass(styles.wrapper)
-    }
-
-    setTitle(title) {
-      this.setState({ title })
+      $('html').removeClass('pub-layout')
     }
 
     render() {
+      const { title, ...passThroughProps } = this.props
       return (
-        <MuiThemeProvider muiTheme={MuiTheme}>
-          <div>
-            <header className={styles.header}>
-              <div className="container">
-                <a href="#" className={styles.logo}>
-                  <img src={logo} alt="" />
-                  <span>React blog</span>
-                </a>
-              </div>
-            </header>
-            <div className={styles.content}>
-              <div className="container">
+        <div>
+          <TopNav />
+
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-8">
                 <Alert />
-                <WrappedComponent layout={this} {...this.props} />
+                <h1>{title}</h1>
+                <hr />
+                <WrappedComponent {...passThroughProps} />
+              </div>
+
+              <div className="col-md-4">
+                <Search />
+                <CategoryNav />
               </div>
             </div>
-          </div>
 
-        </MuiThemeProvider>
+            <hr />
+
+            <footer>
+              <div className="row">
+                <div className="col-lg-12">
+                  <p>Copyright &copy; lamhq 2018</p>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
       )
     }
   }
 
-  PublicLayout.displayName = 'PublicLayout'
-  PublicLayout.propTypes = {
-    isLoading: PropTypes.bool,
+  Wrapper.displayName = 'PublicLayout'
+  Wrapper.propTypes = {
+    title: PropTypes.string,
   }
 
-  return PublicLayout
+  return Wrapper
 }
 
 export default compose(
-  withPublicLayout,
-  withErrorBoundary(ErrorPage)
+  connect(
+    state => ({
+      title: state.common.title,
+    })
+  ),
+  PublicLayout,
+  ErrorBoundary(ErrorPage)
 )

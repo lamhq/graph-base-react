@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { clearIdentity } from '../../../common/actions'
@@ -16,13 +15,13 @@ const TopNav = ({ username, logout }) => (
 
         <ul className="nav navbar-nav navbar-right">
           <li className="">
-            <a href="javascript:" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <a role="button" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               {username} &nbsp;
               <span className=" fa fa-angle-down"></span>
             </a>
             <ul className="dropdown-menu dropdown-usermenu pull-right">
               <li>
-                <Link to={`/admin/profile`}>Profile</Link>
+                <Link to="/admin/profile">Profile</Link>
               </li>
               <li>
                 <a role="button" onClick={logout}>

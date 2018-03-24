@@ -7,7 +7,7 @@ import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'font-awesome/css/font-awesome.min.css'
-import './AdminLayout/style.css'
+import './AdminLayout/gentelella.css'
 import LoginRequired from '../../common/hoc/LoginRequired'
 import ErrorBoundary from '../../common/hoc/ErrorBoundary'
 import ErrorPage from '../components/ErrorPage'
@@ -20,12 +20,14 @@ function AdminLayout(WrappedComponent) {
   class Wrapper extends Component {
 
     componentDidMount() {
-      $('body').addClass('nav-md gentelella')
+      $('html').addClass('gentellela')
+      $('body').addClass('nav-md')
       this.initSidebar()
     }
 
     componentWillUnmount() {
-      $('body').removeClass('nav-md gentelella')
+      $('html').removeClass('gentellela')
+      $('body').removeClass('nav-md')
     }
 
     initSidebar() {
@@ -69,9 +71,9 @@ function AdminLayout(WrappedComponent) {
             $SIDEBAR_MENU.find('li').removeClass('active active-sm')
             $SIDEBAR_MENU.find('li ul').slideUp()
           } else {
-            if ($BODY.is(".nav-sm")) {
-              $SIDEBAR_MENU.find("li").removeClass("active active-sm")
-              $SIDEBAR_MENU.find("li ul").slideUp()
+            if ($BODY.is('.nav-sm')) {
+              $SIDEBAR_MENU.find('li').removeClass('active active-sm')
+              $SIDEBAR_MENU.find('li ul').slideUp()
             }
           }
           $li.addClass('active')
@@ -84,8 +86,6 @@ function AdminLayout(WrappedComponent) {
 
       // toggle small or large menu
       $MENU_TOGGLE.on('click', function () {
-        console.log('clicked - menu toggle')
-
         if ($BODY.hasClass('nav-md')) {
           $SIDEBAR_MENU.find('li.active ul').hide()
           $SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active')
