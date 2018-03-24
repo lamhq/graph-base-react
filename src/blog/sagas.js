@@ -2,8 +2,8 @@ import { all, call, put, takeLatest } from 'redux-saga/effects'
 
 import adminSaga from './admin/sagas'
 import { request } from '../common/helpers'
-import { setPosts } from './actions'
-import { LOAD_POSTS } from './constants/actionTypes'
+import { setPosts, setPost } from './actions'
+import { LOAD_POSTS, LOAD_POST } from './constants/actionTypes'
 
 function* loadPosts(action) {
   const { resolve, reject } = action
@@ -20,8 +20,24 @@ function* loadPosts(action) {
   }
 }
 
+function* loadPost(action) {
+  const { resolve, reject, payload: id } = action
+  try {
+    var response = yield call(request, {
+      url: `/posts/${id}`,
+      method: 'get',
+      requestName: 'loadPost'
+    })
+    yield put(setPost(response.data))
+    resolve(response)
+  } catch (error) {
+    reject(error)
+  }
+}
+
 function* postSaga() {
   yield takeLatest(LOAD_POSTS, loadPosts)
+  yield takeLatest(LOAD_POST, loadPost)
 }
 
 export default function* blogSaga() {

@@ -9,7 +9,7 @@ import ProfilePage from './admin/profile/components/ProfilePage'
 import PostListPage from './blog/admin/post/components/PostListPage'
 import PostEditPage from './blog/admin/post/components/PostEditPage'
 import HomePage from './blog/components/PostListPage'
-// import PostDetailPage from './blog/pages/PostDetailPage'
+import PostDetailPage from './blog/components/PostDetailPage'
 import NotFoundPage from './admin/components/NotFoundPage'
 
 const App = () => (
@@ -17,7 +17,7 @@ const App = () => (
     <ConnectedRouter history={history}>
       <Switch>
         <Route path="/" component={HomePage} exact />
-        {/* <Route path="/post/:id" component={PostDetailPage} /> */}
+        <Route path="/post/:id" component={PostDetailPage} />
         <Route path="/admin" component={ProfilePage} exact />
         <Route path="/admin/login" component={LoginPage} />
         <Route path="/admin/profile" component={ProfilePage} />

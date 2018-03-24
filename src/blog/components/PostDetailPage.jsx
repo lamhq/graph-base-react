@@ -3,29 +3,34 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
 
-import * as actions from '../actions'
-import PublicLayout from '../widgets/PublicLayout'
+import { loadPost } from '../actions'
+import { setTitle } from '../../common/actions'
+// import PublicLayout from '../widgets/PublicLayout'
 import Spinner from '../../common/components/Spinner'
 
 class PostDetailPage extends Component {
 
-  componentDidMount() {
-    const { layout, loadPost, match } = this.props
-    loadPost(match.params.id)
-      .then(() => layout.setTitle(this.props.post.title))
+  async componentDidMount() {
+    const { setTitle, loadPost, match } = this.props
+    var postId = match.params.id
+    try {
+      var resp = await loadPost(postId)
+      setTitle(resp.data.title)
+    } catch (error) { }
   }
 
   render() {
-    const { post, isLoading } = this.props
+    const { post, postLoaded } = this.props
     return (
       <div>
-        {isLoading ?
-          <Spinner /> : (
+        {postLoaded ?
+          (
             <div>
               <h1>{post.title}</h1>
               <div>{post.content}</div>
             </div>
           )
+          : <Spinner />
         }
       </div>
     )
@@ -33,26 +38,22 @@ class PostDetailPage extends Component {
 }
 
 PostDetailPage.propTypes = {
-  layout: PropTypes.instanceOf(Component),
-  isLoading: PropTypes.bool,
-  post: PropTypes.object,
+  setTitle: PropTypes.func,
+  postLoaded: PropTypes.bool,
   loadPost: PropTypes.func,
-}
-
-const mapStateToProps = state => {
-  return {
-    isLoading: state.common.isLoading.loadPost,
-    post: state.blog.postDetail.post
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    loadPost: id => dispatch(actions.loadPost(id)),
-  }
+  post: PropTypes.object,
 }
 
 export default compose(
-  PublicLayout,
-  connect(mapStateToProps, mapDispatchToProps)
+  // PublicLayout,
+  connect(
+    state => ({
+      postLoaded: state.common.request.loadPost,
+      post: state.blog.postDetail.post
+    }),
+    dispatch => ({
+      setTitle: title => dispatch(setTitle(title)),
+      loadPost: id => dispatch(loadPost(id)),
+    })
+  )
 )(PostDetailPage)
