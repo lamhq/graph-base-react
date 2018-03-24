@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import $ from 'jquery'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'font-awesome/css/font-awesome.min.css'
-import 'gentelella/build/css/custom.min.css'
+import './AdminLayout/style.css'
 import LoginRequired from '../../common/hoc/LoginRequired'
 import ErrorBoundary from '../../common/hoc/ErrorBoundary'
 import ErrorPage from '../components/ErrorPage'
@@ -19,12 +20,12 @@ function AdminLayout(WrappedComponent) {
   class Wrapper extends Component {
 
     componentDidMount() {
-      $('body').addClass('nav-md')
+      $('body').addClass('nav-md gentelella')
       this.initSidebar()
     }
 
     componentWillUnmount() {
-      $('body').removeClass('nav-md')
+      $('body').removeClass('nav-md gentelella')
     }
 
     initSidebar() {

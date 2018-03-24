@@ -39,7 +39,6 @@
     "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
-    "gentelella": "^1.4.0",
     "history": "^4.7.2",
     "jquery": "^3.2.1",
     "raven-js": "^3.21.0",
