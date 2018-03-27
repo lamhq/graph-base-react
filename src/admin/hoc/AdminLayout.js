@@ -7,7 +7,7 @@ import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'font-awesome/css/font-awesome.min.css'
-import './AdminLayout/gentelella.css'
+import 'gentelella/build/css/custom.min.css'
 import LoginRequired from '../../common/hoc/LoginRequired'
 import ErrorBoundary from '../../common/hoc/ErrorBoundary'
 import ErrorPage from '../components/ErrorPage'
@@ -20,13 +20,11 @@ function AdminLayout(WrappedComponent) {
   class Wrapper extends Component {
 
     componentDidMount() {
-      $('html').addClass('gentellela')
       $('body').addClass('nav-md')
       this.initSidebar()
     }
 
     componentWillUnmount() {
-      $('html').removeClass('gentellela')
       $('body').removeClass('nav-md')
     }
 

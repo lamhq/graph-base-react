@@ -6,10 +6,8 @@ ReactJs source code for React Blog project
 
 ## Requirements
 
-- [Yarn](https://yarnpkg.com/) package + [Node.js](https://nodejs.org/) v8.9 or
-  newer
-- MongoDB 3.6.1 or
-  newer
+- [Node.js](https://nodejs.org/) v8.9 or newer
+- [Yarn](https://yarnpkg.com/) package or newer
 
 ## Setup
 

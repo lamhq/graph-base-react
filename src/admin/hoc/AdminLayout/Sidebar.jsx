@@ -13,7 +13,7 @@ const SideBar = props => (
           </a>
           <ul className="nav child_menu">
             <li>
-              <Link to={`/admin/posts`}>Post</Link>
+              <Link to="/admin/posts">Post</Link>
             </li>
           </ul>
         </li>
