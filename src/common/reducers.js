@@ -2,11 +2,12 @@ import { combineReducers } from 'redux'
 import * as actionTypes from './constants/actionTypes'
 
 /**
- * contain status of all ajax request (finished or not)
+ * Reducer for store.common.requestFinished
+ *
  * @param {Object} state
  * @param {Object} action
  */
-function request(state = {}, action) {
+function requestFinished(state = {}, action) {
   var requestName = action.payload
   switch (action.type) {
     case actionTypes.REQUEST_START:
@@ -20,11 +21,22 @@ function request(state = {}, action) {
   }
 }
 
+/**
+ * Initial state for store.common.alert
+ *
+ * @type {Object}
+ */
 const initialAlert = {
   type: 'success',
   message: ''
 }
 
+/**
+ * Reducer for store.common.alert
+ *
+ * @param {Object} state
+ * @param {Object} action
+ */
 function alert(state = initialAlert, action) {
   switch (action.type) {
 
@@ -42,6 +54,11 @@ function alert(state = initialAlert, action) {
   }
 }
 
+/**
+ * Initial state for store.common.identity
+ *
+ * @type {Object}
+ */
 const initialIdentity = {
   id: null,
   username: 'Guest',
@@ -51,6 +68,12 @@ const initialIdentity = {
   }
 }
 
+/**
+ * Reducer for store.common.identity
+ *
+ * @param {Object} state
+ * @param {Object} action
+ */
 function identity(state = initialIdentity, action) {
   switch (action.type) {
 
@@ -65,6 +88,12 @@ function identity(state = initialIdentity, action) {
   }
 }
 
+/**
+ * Reducer for store.common.title
+ *
+ * @param {Object} state
+ * @param {Object} action
+ */
 function title(state = '', action) {
   switch (action.type) {
     case actionTypes.SET_TITLE:
@@ -74,9 +103,19 @@ function title(state = '', action) {
   }
 }
 
+/**
+ * Main reducer for common module
+ */
 export default combineReducers({
+  // information of current logged user
   identity,
+
+  // text displayed in alert component
   alert,
-  request,
-  title
+
+  // contain flags to check ajax requests are finished or not, useful when showing spinner
+  requestFinished,
+
+  // current page title
+  title,
 })

@@ -2,11 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { validateIdentity, getComponentName } from '../../common/helpers'
 
+/**
+ * Higher order component that perform authentication checking
+ *
+ * If user is authenticated, the wrapped component is rendered
+ * else, set browser url to a passed login url
+ *
+ * @param {String} loginUrl
+ */
 const LoginRequired = loginUrl => WrappedComponent => {
-
   var Wrapper = props => {
     const { identity, ...passthroughProps } = props
 

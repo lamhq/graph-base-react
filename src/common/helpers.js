@@ -1,3 +1,7 @@
+/**
+ * Contain all reusable functions
+ */
+
 import http from './http'
 import { put, call } from 'redux-saga/effects'
 import validate from 'validate.js'
@@ -22,14 +26,29 @@ export function getObjectValue(obj, keyPath, defVal) {
   return result ? result : defVal
 }
 
+/**
+ * Save identity to local storage
+ *
+ * @param {Object} value
+ */
 export function saveIdentity(value) {
   saveItemToStorage('identity', value)
 }
 
+/**
+ * Load identity from local storage
+ *
+ * @returns {Object}
+ */
 export function loadIdentity() {
   return loadItemFromStorage('identity')
 }
 
+/**
+ * Check identity data is valid or not (expired)
+ *
+ * @param {Object} identity
+ */
 export function validateIdentity(identity) {
   const { token: { value, expiredAt } } = identity
   if (!value) return false
@@ -41,6 +60,12 @@ export function validateIdentity(identity) {
   return true
 }
 
+/**
+ * Save data to browser's local storage
+ *
+ * @param {String} name
+ * @param {Mixed} value
+ */
 export function saveItemToStorage(name, value) {
   var itemName = `${APP_NAME}_${name}`
   if (value) {
@@ -50,6 +75,11 @@ export function saveItemToStorage(name, value) {
   }
 }
 
+/**
+ * Get data from browser's local storage
+ *
+ * @param {String} name
+ */
 export function loadItemFromStorage(name) {
   var itemName = `${APP_NAME}_${name}`
   var str = window.localStorage.getItem(itemName)
@@ -66,18 +96,25 @@ export function getComponentName(Component) {
 }
 
 /**
- * Helper function used to create action creator function
+ * Helper function used to create redux action
  *
  * @param {String} type
+ * @returns {Object} redux action
  */
 export function createAction(type) {
   return payload => ({ type, payload })
 }
 
 /**
- * Helper function used to create action creator function for asynchronous task
+ * Helper function used to create redux action for asynchronous task
+ * In the returned action, beside type, payload fields, also
+ * contain a promise object plus resolve, reject function for that promise
+ *
+ * Saga worker or redux thunk will call resolve, reject function when async tasks done
+ * Component (or caller function) can use the returned promise to be notified when async tasks complete
  *
  * @param {String} type
+ * @returns {Object} redux action
  */
 export function createAsyncAction(type) {
   return payload => {
@@ -98,7 +135,20 @@ export function createAsyncAction(type) {
 }
 
 /**
- * make ajax request
+ * Generator function to perform ajax request
+ *
+ * This function is called in redux saga code, example:
+ * ```
+ * var response = yield call(request, {
+ *   url: '/admin/session',
+ *   method: 'post',
+ *   data: payload
+ * })
+ * ```
+ *
+ * - set flag in redux store to know whether request is pending or finished
+ * - set error alert when request fail
+ * - handle 401 (unauthorized) response
  *
  * @param {Object} config
  */

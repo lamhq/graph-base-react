@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import { getComponentName } from '../helpers'
 import Raven from '../../common/sentry'
 
+/**
+ * Higher order component catch error in child components and render an error page
+ *
+ * If user is authenticated, the wrapped component is rendered
+ * else, set browser url to a passed login url
+ *
+ * @param {Mixed} ErrorPage react component for displaying error
+ */
 const ErrorBoundary = ErrorPage => WrappedComponent => {
 
   class Wrapper extends Component {

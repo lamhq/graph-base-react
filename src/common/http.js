@@ -1,3 +1,8 @@
+/**
+ * Http client module to perform ajax request
+ * All source codes in application will use this module instead of calling axios directly
+ */
+
 import axios from 'axios'
 import * as params from './constants/params'
 
@@ -7,8 +12,6 @@ var httpClient = axios.create({
   headers: {}
 })
 
-export default httpClient
-
 export function setAccessToken(token) {
   if (token) {
     httpClient.defaults.headers.common['Authorization'] = `bearer ${token}`
@@ -16,3 +19,5 @@ export function setAccessToken(token) {
     httpClient.defaults.headers.common['Authorization'] = false
   }
 }
+
+export default httpClient

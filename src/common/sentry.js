@@ -1,14 +1,25 @@
 /**
- * wrapper module for making raven integration more easily
+ * Wrapper module for making raven integration more easily
  */
-import Raven from 'raven-js'
 
-// for reactjs app, environment is defined in webpack.prod.js
-var isEnabled = process.env.NODE_ENV==='production'
-var sentryDNS = process.env.SENTRY_DNS
+import Raven from 'raven-js'
+import * as params from './constants/params'
 
 /**
- * install raven
+ * Flag to check whether to enable Raven
+ * Currently it is only activated on production environment
+ */
+var isEnabled = params.ENVIRONMENT === 'production'
+
+/**
+ * Sentry DND url, see: https://docs.sentry.io/quickstart/#configure-the-dsn
+ */
+var sentryDNS = params.SENTRY_DNS
+
+/**
+ * Install ravenjs module.
+ *
+ * This function should be called once when initializing application
  */
 export function install() {
   if (!isEnabled || !sentryDNS) return false

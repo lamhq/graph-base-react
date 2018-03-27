@@ -1,3 +1,7 @@
+/**
+ * Common redux actions for a basic application
+ */
+
 import { createAction } from './helpers'
 import * as types from './constants/actionTypes'
 
