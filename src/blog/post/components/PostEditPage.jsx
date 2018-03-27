@@ -5,9 +5,9 @@ import { SubmissionError } from 'redux-form'
 import PropTypes from 'prop-types'
 
 import { loadPost, savePost } from '../actions'
-import { setTitle } from '../../../../common/actions'
-import AdminLayout from '../../../../admin/hoc/AdminLayout'
-import Spinner from '../../../../common/components/Spinner'
+import { setTitle } from '../../../common/actions'
+import AdminLayout from '../../../admin/hoc/AdminLayout'
+import Spinner from '../../../common/components/Spinner'
 import PostForm from './PostForm'
 
 class PostEditPage extends Component {
@@ -43,14 +43,18 @@ class PostEditPage extends Component {
         _error: error.message
       })
     }
+  }
 
+  canDisplayForm() {
+    const { postLoaded, match } = this.props
+    var postId = match.params.id
+    return !postId || postLoaded
   }
 
   render() {
-    const { postLoaded } = this.props
     return (
       <div>
-        {postLoaded ?
+        {this.canDisplayForm() ?
           <PostForm onSubmit={this.onSubmit} initialValues={this.state.initialFormValues} /> :
           <Spinner />
         }
@@ -70,7 +74,7 @@ export default compose(
   AdminLayout,
   connect(
     state => ({
-      postLoaded: state.common.request.loadPost,
+      postLoaded: state.common.requestFinished.loadPost,
     }),
     dispatch => ({
       loadPost: id => {

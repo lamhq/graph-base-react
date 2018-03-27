@@ -67,7 +67,7 @@ export default compose(
   AdminLayout,
   connect(
     state => ({
-      profileLoaded: state.common.request.loadProfile,
+      profileLoaded: state.common.requestFinished.loadProfile,
     }),
     dispatch => ({
       // set page title

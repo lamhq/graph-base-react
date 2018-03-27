@@ -1,4 +1,5 @@
 export const LOAD_POSTS = 'BLOG/LOAD_POSTS'
 export const SET_POSTS = 'BLOG/SET_POSTS'
+export const DELETE_POST = 'BLOG/DELETE_POST'
 export const LOAD_POST = 'BLOG/LOAD_POST'
-export const SET_POST = 'BLOG/SET_POST'
+export const SAVE_POST = 'BLOG/SAVE_POST'

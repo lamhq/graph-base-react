@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { loadPosts, deletePost } from '../actions'
-import { setTitle } from '../../../../common/actions'
-import AdminLayout from '../../../../admin/hoc/AdminLayout'
-import Spinner from '../../../../common/components/Spinner'
+import { setTitle } from '../../../common/actions'
+import AdminLayout from '../../../admin/hoc/AdminLayout'
+import Spinner from '../../../common/components/Spinner'
 
 class PostListPage extends Component {
 
@@ -78,8 +78,8 @@ export default compose(
   AdminLayout,
   connect(
     state => ({
-      postsLoaded: state.common.request.loadPosts,
-      posts: state.blog.admin.post.postList.items
+      postsLoaded: state.common.requestFinished.loadPosts,
+      posts: state.blog.post.postList.items
     }),
     dispatch => ({
       setTitle: title => dispatch(setTitle(title)),

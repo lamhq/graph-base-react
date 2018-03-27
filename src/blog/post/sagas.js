@@ -1,8 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 
-import { request } from '../../../common/helpers'
-import { setSuccess } from '../../../common/actions'
+import { request } from '../../common/helpers'
+import { setSuccess } from '../../common/actions'
 import { LOAD_POSTS, DELETE_POST, LOAD_POST, SAVE_POST } from './constants/actionTypes'
 import { setPosts } from './actions'
 

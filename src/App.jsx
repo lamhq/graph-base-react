@@ -6,18 +6,15 @@ import store, { history } from './store'
 
 import LoginPage from './admin/login/components/LoginPage'
 import ProfilePage from './admin/profile/components/ProfilePage'
-import PostListPage from './blog/admin/post/components/PostListPage'
-import PostEditPage from './blog/admin/post/components/PostEditPage'
-import HomePage from './blog/components/PostListPage'
-import PostDetailPage from './blog/components/PostDetailPage'
+import PostListPage from './blog/post/components/PostListPage'
+import PostEditPage from './blog/post/components/PostEditPage'
 import NotFoundPage from './admin/components/NotFoundPage'
 
 const App = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={HomePage} exact />
-        <Route path="/post/:id" component={PostDetailPage} />
+        <Route path="/" component={ProfilePage} exact />
         <Route path="/admin" component={ProfilePage} exact />
         <Route path="/admin/login" component={LoginPage} />
         <Route path="/admin/profile" component={ProfilePage} />
