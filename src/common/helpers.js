@@ -2,17 +2,17 @@
  * Contain all reusable functions
  */
 
-import http from './http'
-import { put, call } from 'redux-saga/effects'
-import validate from 'validate.js'
+import { put, call } from 'redux-saga/effects';
+// import validate from 'validate.js';
+import http from './http';
 
 import {
   requestStart,
   requestFinished,
   setError,
-  clearIdentity
-} from './actions'
-import { APP_NAME } from './constants/params'
+  clearIdentity,
+} from './actions';
+import { APP_NAME } from './constants/params';
 
 /**
  * Get value of nested property by path
@@ -22,8 +22,8 @@ import { APP_NAME } from './constants/params'
  * @param {Mixed} defVal default value when the result is undefined
  */
 export function getObjectValue(obj, keyPath, defVal) {
-  var result = validate.getDeepObjectValue(obj, keyPath)
-  return result ? result : defVal
+  const result = validate.getDeepObjectValue(obj, keyPath);
+  return result || defVal;
 }
 
 /**
@@ -32,7 +32,7 @@ export function getObjectValue(obj, keyPath, defVal) {
  * @param {Object} value
  */
 export function saveIdentity(value) {
-  saveItemToStorage('identity', value)
+  saveItemToStorage('identity', value);
 }
 
 /**
@@ -41,7 +41,7 @@ export function saveIdentity(value) {
  * @returns {Object}
  */
 export function loadIdentity() {
-  return loadItemFromStorage('identity')
+  return loadItemFromStorage('identity');
 }
 
 /**
@@ -50,14 +50,14 @@ export function loadIdentity() {
  * @param {Object} identity
  */
 export function validateIdentity(identity) {
-  const { token: { value, expiredAt } } = identity
-  if (!value) return false
+  const { token: { value, expiredAt } } = identity;
+  if (!value) return false;
 
-  var now = new Date()
-  var expired = expiredAt ? new Date(expiredAt) : null
-  if (!expired || expired < now) return false
+  const now = new Date();
+  const expired = expiredAt ? new Date(expiredAt) : null;
+  if (!expired || expired < now) return false;
 
-  return true
+  return true;
 }
 
 /**
@@ -67,11 +67,11 @@ export function validateIdentity(identity) {
  * @param {Mixed} value
  */
 export function saveItemToStorage(name, value) {
-  var itemName = `${APP_NAME}_${name}`
+  const itemName = `${APP_NAME}_${name}`;
   if (value) {
-    window.localStorage.setItem(itemName, JSON.stringify(value))
+    window.localStorage.setItem(itemName, JSON.stringify(value));
   } else {
-    window.localStorage.removeItem(itemName)
+    window.localStorage.removeItem(itemName);
   }
 }
 
@@ -81,9 +81,9 @@ export function saveItemToStorage(name, value) {
  * @param {String} name
  */
 export function loadItemFromStorage(name) {
-  var itemName = `${APP_NAME}_${name}`
-  var str = window.localStorage.getItem(itemName)
-  return str === null ? null : JSON.parse(str)
+  const itemName = `${APP_NAME}_${name}`;
+  const str = window.localStorage.getItem(itemName);
+  return str === null ? null : JSON.parse(str);
 }
 
 /**
@@ -92,7 +92,7 @@ export function loadItemFromStorage(name) {
  * @param {Component} Component
  */
 export function getComponentName(Component) {
-  return Component.displayName || Component.name || 'Component'
+  return Component.displayName || Component.name || 'Component';
 }
 
 /**
@@ -102,7 +102,7 @@ export function getComponentName(Component) {
  * @returns {Object} redux action
  */
 export function createAction(type) {
-  return payload => ({ type, payload })
+  return payload => ({ type, payload });
 }
 
 /**
@@ -117,21 +117,22 @@ export function createAction(type) {
  * @returns {Object} redux action
  */
 export function createAsyncAction(type) {
-  return payload => {
-    var resolve, reject
-    var promise = new Promise((rs, rj) => {
-      resolve = rs
-      reject = rj
-    })
+  return (payload) => {
+    let resolve,
+      reject;
+    const promise = new Promise((rs, rj) => {
+      resolve = rs;
+      reject = rj;
+    });
 
     return {
       type,
       payload,
       promise,
       resolve,
-      reject
-    }
-  }
+      reject,
+    };
+  };
 }
 
 /**
@@ -153,39 +154,39 @@ export function createAsyncAction(type) {
  * @param {Object} config
  */
 export function* request(config) {
-  const { requestName = 'default', ...axiosConfig } = config
+  const { requestName = 'default', ...axiosConfig } = config;
 
   if (requestName) {
-    yield put(requestStart(requestName))
+    yield put(requestStart(requestName));
   }
 
   // execute http request
   try {
-    const response = yield call(http, axiosConfig)
-    yield put(requestFinished(requestName))
-    return response
+    const response = yield call(http, axiosConfig);
+    yield put(requestFinished(requestName));
+    return response;
   } catch (error) {
-    yield put(requestFinished(requestName))
+    yield put(requestFinished(requestName));
 
     // display error message
-    var message = 'An error occurred while processing your request'
+    let message = 'An error occurred while processing your request';
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      var data = error.response.data
-      error.errors = data.errors
-      message = typeof data === 'string' ? data : data.message
+      const data = error.response.data;
+      error.errors = data.errors;
+      message = typeof data === 'string' ? data : data.message;
     } else if (error.request) {
       // The request was made but no response was received
-      message = 'Error while connecting to server.'
+      message = 'Error while connecting to server.';
     }
-    yield put(setError(message))
+    yield put(setError(message));
 
     // clear identity and show login page on 401 response
     if (error.response && error.response.status === 401) {
-      yield put(clearIdentity())
+      yield put(clearIdentity());
     }
 
-    throw error
+    throw error;
   }
 }

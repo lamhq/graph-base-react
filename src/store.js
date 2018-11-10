@@ -5,7 +5,6 @@ import createHistory from 'history/createBrowserHistory';
 
 import reducers from './reducers';
 import rootSaga from './sagas';
-import { loadIdentity } from './common/actions';
 
 // enable redux devtool chrome extension
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -30,8 +29,5 @@ const store = createStore(
 
 // run saga
 sagaMiddleware.run(rootSaga);
-
-// load data from local storage to store on initializing
-store.dispatch(loadIdentity());
 
 export default store;
