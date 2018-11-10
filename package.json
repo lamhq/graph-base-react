@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --open --hot --inline --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack-cli --config webpack.prod.js"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +36,7 @@
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.4"
   },
