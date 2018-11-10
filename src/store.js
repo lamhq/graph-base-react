@@ -1,21 +1,21 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import createSagaMiddleware from 'redux-saga'
-import { routerMiddleware } from 'react-router-redux'
-import createHistory from 'history/createBrowserHistory'
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { routerMiddleware } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
-import reducers from './reducers'
-import rootSaga from './sagas'
-import { loadIdentity } from './common/actions'
+import reducers from './reducers';
+import rootSaga from './sagas';
+import { loadIdentity } from './common/actions';
 
 // enable redux devtool chrome extension
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // add the react-router-redux reducer to store on the `router` key
 // also apply our middleware for navigating
-export const history = createHistory()
+export const history = createHistory();
 
 // add redux-saga middleware
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 
 // create the store
 const store = createStore(
@@ -23,15 +23,15 @@ const store = createStore(
   composeEnhancers(
     applyMiddleware(
       routerMiddleware(history),
-      sagaMiddleware
-    )
-  )
-)
+      sagaMiddleware,
+    ),
+  ),
+);
 
 // run saga
-sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga);
 
 // load data from local storage to store on initializing
-store.dispatch(loadIdentity())
+store.dispatch(loadIdentity());
 
-export default store
+export default store;

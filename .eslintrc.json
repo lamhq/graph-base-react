@@ -1,39 +1,22 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
+    "airbnb"
   ],
   "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": true
-    },
-    "sourceType": "module"
+  "env": {
+    "browser": true
   },
-  "plugins": [
-    "react"
-  ],
   "rules": {
-    "indent": [
+    "no-underscore-dangle": [
       "error",
-      2,
       {
-        "SwitchCase": 1
+        "allow": [
+          "__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"
+        ]
       }
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "never"
     ]
+  },
+  "globals": {
+    "__DEVTOOLS__": true
   }
 }
