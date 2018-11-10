@@ -5,6 +5,8 @@ import { install as installRavenJs } from './common/sentry';
 
 installRavenJs();
 
+// ReactDOM.render(<App />, document.getElementById('root'));
+
 const render = (Component) => {
   ReactDOM.render(<Component />, document.getElementById('root'));
 };
