@@ -7,7 +7,9 @@ import createRootReducer from './reducers';
 import rootSaga from './sagas';
 
 // enable redux devtool chrome extension
+/* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+/* eslint-enable */
 
 // add the react-router-redux reducer to store on the `router` key
 // also apply our middleware for navigating
