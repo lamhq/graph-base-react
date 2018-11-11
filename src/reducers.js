@@ -1,13 +1,9 @@
-import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
-import { reducer as formReducer } from 'redux-form'
+import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
 
-import common from './common/reducers'
-import blog from './blog/reducers'
+const rootReducer = history => combineReducers({
+  router: connectRouter(history),
+  // rest of your reducers
+});
 
-export default combineReducers({
-  common,
-  blog,
-  router: routerReducer,
-  form: formReducer
-})
+export default rootReducer;

@@ -1,30 +1,21 @@
-import React from 'react'
-import { Provider } from 'react-redux'
-import { Route, Switch } from 'react-router'
-import { ConnectedRouter } from 'react-router-redux'
-import store, { history } from './store'
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Route, Switch } from 'react-router';
+import { ConnectedRouter } from 'connected-react-router';
+import { hot } from 'react-hot-loader';
 
-import LoginPage from './admin/login/components/LoginPage'
-import ProfilePage from './admin/profile/components/ProfilePage'
-import PostListPage from './blog/post/components/PostListPage'
-import PostEditPage from './blog/post/components/PostEditPage'
-import NotFoundPage from './admin/components/NotFoundPage'
+import store, { history } from './store';
+
+const TestPage = () => (<p>Welcome</p>);
 
 const App = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={ProfilePage} exact />
-        <Route path="/admin" component={ProfilePage} exact />
-        <Route path="/admin/login" component={LoginPage} />
-        <Route path="/admin/profile" component={ProfilePage} />
-        <Route path="/admin/posts/add" component={PostEditPage} />
-        <Route path="/admin/posts/edit/:id" component={PostEditPage} />
-        <Route path="/admin/posts" component={PostListPage} exact />
-        <Route path="/admin" component={NotFoundPage} />
+        <Route path="/" component={TestPage} exact />
       </Switch>
     </ConnectedRouter>
   </Provider>
-)
+);
 
-export default App
+export default hot(module)(App);

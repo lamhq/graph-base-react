@@ -1,42 +1,53 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const common = require('./webpack.common.js')
+/* eslint-disable import/no-extraneous-dependencies */
+const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const common = require('./webpack.common.js');
+
+// const cdnBaseUrl = process.env.CDN_BASE_URL;
 
 module.exports = merge(common, {
+  mode: 'production',
   devtool: 'source-map',
-  module: {
-    rules: [
-      // Extract css from the bundle into a separate file.
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true,
-              }
-            }
-          ]
-        })
-      }
-    ]
+  output: {
+    filename: 'scripts.[chunkhash].js',
+    // publicPath: `${cdnBaseUrl}/`,
+  },
+  optimization: {
+    minimizer: [
+      new OptimizeCSSAssetsPlugin(),
+    ],
   },
   plugins: [
-    new UglifyJSPlugin({
-      sourceMap: true
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: 'style.[hash].css',
+      chunkFilename: '[id].css',
     }),
-
-    // Extract css from the bundle into a separate file.
-    new ExtractTextPlugin('styles.css'),
-
-    // define environment variables for production
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.SENTRY_DNS': JSON.stringify('https://1f4bf702246d45d28e4f0d24d17832ca@sentry.io/264486'),
-    })
-  ]
-})
+  ],
+  module: {
+    rules: [
+      // load less file
+      {
+        test: /\.less$/,
+        loader: [
+          // extract CSS into separate files
+          MiniCssExtractPlugin.loader,
+          // allow importing css files
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]_[local]_[hash:base64:5]',
+            },
+          },
+          // compile less to css
+          'less-loader',
+        ],
+      },
+    ],
+  },
+});
