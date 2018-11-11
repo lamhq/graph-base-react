@@ -25,6 +25,13 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        loader: [
+          'style-loader',
+          'css-loader',
+        ],
+      },
       // load less file
       {
         test: /\.less$/,

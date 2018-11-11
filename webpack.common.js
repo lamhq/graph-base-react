@@ -19,7 +19,7 @@ module.exports = {
     // Automatically generate an HTML5 file for you that includes all your webpack bundles
     new HtmlWebpackPlugin({
       title: 'Graph Base',
-      favicon: './src/favicon.ico',
+      favicon: './src/assets/favicon.ico',
       template: './src/index.html',
     }),
   ],

@@ -5,8 +5,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
 
 import store, { history } from './store';
-
-const TestPage = () => (<p>Welcome</p>);
+import TestPage from './TestPage';
 
 const App = () => (
   <Provider store={store}>
