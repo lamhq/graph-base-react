@@ -18,7 +18,7 @@ module.exports = {
     new CleanWebpackPlugin([outputDir]),
     // Automatically generate an HTML5 file for you that includes all your webpack bundles
     new HtmlWebpackPlugin({
-      title: 'React Blog',
+      title: 'Graph Base',
       favicon: './src/favicon.ico',
       template: './src/index.html',
     }),
@@ -45,6 +45,26 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+      },
+      // load less file
+      {
+        test: /\.less$/,
+        loader: [
+          // add CSS to the DOM by injecting a <style> tag
+          'style-loader',
+          // allow importing css files
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]_[local]_[hash:base64:5]',
+            },
+          },
+          // compile less to css
+          'less-loader',
+        ],
       },
     ],
   },

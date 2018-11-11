@@ -16,15 +16,6 @@ module.exports = merge(common, {
     },
     port: 3001,
   },
-  module: {
-    rules: [
-      // load css files
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
-  },
   plugins: [
     // Enables Hot Module Replacement, otherwise known as HMR
     new webpack.HotModuleReplacementPlugin(),
