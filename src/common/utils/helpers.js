@@ -11,8 +11,8 @@ import {
   requestFinished,
   setError,
   clearIdentity,
-} from './actions';
-import { APP_NAME } from './constants/params';
+} from '../actions';
+import { APP_NAME } from '../constants/params';
 
 /**
  * Get value of nested property by path
@@ -118,8 +118,10 @@ export function createAction(type) {
  */
 export function createAsyncAction(type) {
   return (payload) => {
-    let resolve,
-      reject;
+    let resolve;
+
+
+    let reject;
     const promise = new Promise((rs, rj) => {
       resolve = rs;
       reject = rj;
