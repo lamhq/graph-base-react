@@ -7,7 +7,7 @@ const outputDir = path.resolve(__dirname, 'dist');
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', './src/index.js'],
+    app: ['babel-polyfill', './src/index.jsx'],
   },
   output: {
     path: outputDir,
