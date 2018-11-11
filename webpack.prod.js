@@ -1,12 +1,11 @@
-const webpack = require('webpack');
+/* eslint-disable import/no-extraneous-dependencies */
 const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-  devtool: 'source-map',
   mode: 'production',
+  devtool: 'source-map',
   module: {
     rules: [
       // Extract css from the bundle into a separate file.
@@ -27,18 +26,7 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
-    new UglifyJSPlugin({
-      sourceMap: true,
-    }),
-
     // Extract css from the bundle into a separate file.
     new ExtractTextPlugin('styles.css'),
-
-    // define environment variables for production
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.SENTRY_DNS': JSON.stringify('https://1f4bf702246d45d28e4f0d24d17832ca@sentry.io/264486'),
-    }),
   ],
 });
-
