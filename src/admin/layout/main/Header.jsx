@@ -28,10 +28,10 @@ const Header = ({ sidebarCollapsed, toggleSidebar }) => (
       onClick={toggleSidebar}
     />
     <Dropdown overlay={menu} placement="bottomRight">
-      <Button>
+      <span>
         <Icon type="user" />
         Username
-      </Button>
+      </span>
     </Dropdown>
   </Layout.Header>
 );
