@@ -1,0 +1,34 @@
+/* style for admin main layout */
+.logo {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 40px;
+    margin-right: 8px;
+  }
+
+  span {
+    vertical-align: text-bottom;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: inline-block;
+    font-weight: 700;
+    color: #1890ff;
+    white-space: nowrap;
+    :local {
+      animation: fadeLeftIn 500ms linear;
+      animation-fill-mode: both;
+    }
+  }
+}
+
+.header {
+  background-color: #fff;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

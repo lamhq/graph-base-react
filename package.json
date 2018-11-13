@@ -47,6 +47,7 @@
     "antd": "^3.10.5",
     "connected-react-router": "^5.0.1",
     "history": "^4.7.2",
+    "prop-types": "^15.6.2",
     "raven-js": "^3.21.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",

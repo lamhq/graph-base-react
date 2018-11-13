@@ -1,6 +1,7 @@
 import React from 'react';
-import GuestLayout from './admin/layout/guest';
 
-const TestPage = () => (<p>Welcome ABC</p>);
+import Layout from './admin/layout/main';
 
-export default GuestLayout(TestPage);
+const TestPage = () => (<p>abc</p>);
+
+export default Layout(TestPage);
