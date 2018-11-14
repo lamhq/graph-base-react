@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Layout, Menu, Icon, Dropdown, Button,
+  Layout, Menu, Icon, Dropdown, Avatar,
 } from 'antd';
 
 import styles from './styles.less';
 
 const menu = (
   <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
+    <Menu.Item key="1" className={styles.headerDropdownItem}>
+      <Icon type="user" />
+      Profile
     </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3rd menu item</a>
+    <Menu.Divider />
+    <Menu.Item key="3">
+      <Icon type="poweroff" />
+      Logout
     </Menu.Item>
   </Menu>
 );
@@ -23,13 +23,20 @@ const menu = (
 const Header = ({ sidebarCollapsed, toggleSidebar }) => (
   <Layout.Header className={styles.header}>
     <Icon
-      className="trigger"
+      className={styles.trigger}
       type={sidebarCollapsed ? 'menu-unfold' : 'menu-fold'}
       onClick={toggleSidebar}
     />
-    <Dropdown overlay={menu} placement="bottomRight">
+    <Dropdown
+      className={styles.dropdown}
+      overlay={menu}
+      placement="bottomRight"
+    >
       <span>
-        <Icon type="user" />
+        <Avatar
+          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          className={styles.avatar}
+        />
         Username
       </span>
     </Dropdown>
