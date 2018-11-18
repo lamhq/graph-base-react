@@ -2,19 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'antd';
 
-function decorateForm(WrappedComponent) {
-  class AppForm extends React.Component {
+function antForm(WrappedComponent) {
+  class Wrapper extends React.Component {
     static propsTypes = {
       initialValues: PropTypes.object,
       onSubmit: PropTypes.func.isRequired,
-      loading: PropTypes.bool,
       errors: PropTypes.object,
     }
 
     static defaultProps = {
       initialValues: {},
       errors: {},
-      loading: false,
     }
 
     /**
@@ -62,20 +60,22 @@ function decorateForm(WrappedComponent) {
         }
 
         // export submit event to outside
-        onSubmit(values, this);
+        onSubmit(values);
       });
     }
 
     render() {
+      const {
+        initialValues, onSubmit, errors, ...props
+      } = this.props;
       return (
-        <WrappedComponent {...this.props} />
+        <WrappedComponent {...props} onSubmit={this.handleSubmit} />
       );
     }
   }
 
-  AppForm.displayName = 'AppForm';
-  const AntForm = Form.create()(AppForm);
-  return AntForm;
+  Wrapper.displayName = 'AntForm';
+  return Form.create()(Wrapper);
 }
 
-export default decorateForm;
+export default antForm;

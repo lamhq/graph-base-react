@@ -1,13 +1,13 @@
 import React from 'react';
 import WrappedRegistrationForm from '../test';
 
-class ContainerForm extends React.Component {
+class LoginPage extends React.Component {
   state = {
     loading: false,
     errors: {},
   }
 
-  onSubmit = (values, form) => {
+  onSubmit = (values) => {
     this.setState({ loading: true });
     setTimeout(() => {
       this.setState({
@@ -41,4 +41,4 @@ class ContainerForm extends React.Component {
   }
 }
 
-export default ContainerForm;
+export default LoginPage;
