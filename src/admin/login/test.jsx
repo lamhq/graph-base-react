@@ -3,71 +3,19 @@ import PropTypes from 'prop-types';
 import {
   Form, Input, Tooltip, Icon, Select, Checkbox, Button,
 } from 'antd';
+import antForm from './hoc/antForm';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
 class RegistrationForm extends React.Component {
   static propsTypes = {
-    initialValues: PropTypes.object,
     onSubmit: PropTypes.func.isRequired,
     loading: PropTypes.bool,
-    errors: PropTypes.object,
   }
 
   static defaultProps = {
-    initialValues: {},
-    errors: {},
     loading: false,
-  }
-
-  /**
-   * Set initial form values and errors when form mounted
-   */
-  componentDidMount() {
-    const { form, initialValues, errors } = this.props;
-    form.setFieldsValue(initialValues);
-    this.setErrors(errors);
-  }
-
-  /**
-   * Set form errors passed from parent component
-   * @param {Object} prevProps
-   */
-  componentDidUpdate(prevProps) {
-    const { errors } = this.props;
-    if (prevProps.errors !== errors) {
-      this.setErrors(errors);
-    }
-  }
-
-  /**
-   * Set form field errors
-   * @param {Object} errors
-   */
-  setErrors(errors) {
-    const { form } = this.props;
-    Object.entries(errors).forEach(([field, messages]) => {
-      form.setFields({
-        [field]: {
-          value: form.getFieldValue(field),
-          errors: [Error(messages[0])],
-        },
-      });
-    });
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { form, onSubmit } = this.props;
-    form.validateFieldsAndScroll((err, values) => {
-      if (err) {
-        return;
-      }
-
-      // export submit event to outside
-      onSubmit(values, this);
-    });
   }
 
   validatePassword = (rule, value, callback) => {
@@ -87,8 +35,17 @@ class RegistrationForm extends React.Component {
     }
   }
 
+  checkCheckBox = (rule, value, callback) => {
+    const { form } = this.props;
+    if (!value) {
+      callback('Please agree the terms and conditions!');
+    } else {
+      callback();
+    }
+  }
+
   render() {
-    const { form: { getFieldDecorator }, loading } = this.props;
+    const { form: { getFieldDecorator }, loading, onSubmit } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -122,7 +79,7 @@ class RegistrationForm extends React.Component {
     );
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={onSubmit}>
         <FormItem
           {...formItemLayout}
           hasFeedback
@@ -152,6 +109,7 @@ class RegistrationForm extends React.Component {
           hasFeedback
         >
           {getFieldDecorator('password', {
+            validateTrigger: 'onBlur',
             rules: [{
               required: true, message: 'Please input your password!',
             }, {
@@ -184,6 +142,7 @@ class RegistrationForm extends React.Component {
           hasFeedback
         >
           {getFieldDecorator('phone', {
+            validateTrigger: 'onBlur',
             rules: [{ required: true, message: 'Please input your phone number!' }],
           })(
             <Input addonBefore={prefixSelector} style={{ width: '100%' }} />,
@@ -192,7 +151,10 @@ class RegistrationForm extends React.Component {
 
         <FormItem {...tailFormItemLayout}>
           {getFieldDecorator('agreement', {
-            rules: [{ required: true, message: 'You have to agree with the term & condition' }],
+            validateTrigger: 'onBlur',
+            rules: [
+              { validator: this.checkCheckBox },
+            ],
             valuePropName: 'checked',
           })(
             <Checkbox>
@@ -217,5 +179,4 @@ class RegistrationForm extends React.Component {
   }
 }
 
-const WrappedRegistrationForm = Form.create()(RegistrationForm);
-export default WrappedRegistrationForm;
+export default antForm(RegistrationForm);
