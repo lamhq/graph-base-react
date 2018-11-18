@@ -5,13 +5,13 @@ import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
 
 import store, { history } from './store';
-import TestPage from './TestPage';
+import LoginPage from './admin/login';
 
 const App = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={TestPage} exact />
+        <Route path="/" component={LoginPage} exact />
       </Switch>
     </ConnectedRouter>
   </Provider>
