@@ -1,71 +1,63 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import {
   Button, Form, Input, Checkbox, Icon, Row, Col,
 } from 'antd';
-import Layout from '../../layout/guest';
+
+import antForm from '../../../common/hoc/antForm';
 
 const FormItem = Form.Item;
 
-class LoginPage extends Component {
-  propTypes = {
-    form: PropTypes.object,
-  }
+const LoginForm = (props) => {
+  const { form: { getFieldDecorator }, loading, onSubmit } = props;
+  return (
+    <Form onSubmit={onSubmit}>
+      <FormItem>
+        {getFieldDecorator('email', {
+          validateTrigger: 'onBlur',
+          rules: [{ required: true, message: 'Please input your email' }],
+        })(
+          <Input prefix={<Icon type="user" style={{ color: '#1890ff' }} />} placeholder="Email" />,
+        )}
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator('password', {
+          validateTrigger: 'onBlur',
+          rules: [{ required: true, message: 'Please input your password' }],
+        })(
+          <Input prefix={<Icon type="lock" style={{ color: '#1890ff' }} />} type="password" placeholder="Password" />,
+        )}
+      </FormItem>
+      <FormItem>
+        <Row>
+          <Col span={12}>
+            {getFieldDecorator('remember', {
+              valuePropName: 'checked',
+            })(
+              <Checkbox>Remember me</Checkbox>,
+            )}
+          </Col>
+          <Col span={12} style={{ textAlign: 'right' }}>
+            <a className="login-form-forgot" href="#">Forgot password</a>
+          </Col>
+        </Row>
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { form } = this.props;
-    form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
-  }
+        <Button type="primary" htmlType="submit" loading={loading}>
+          Log in
+        </Button>
+      </FormItem>
+    </Form>
+  );
+};
 
-  render() {
-    const { form: { getFieldDecorator } } = this.props;
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormItem>
-          {getFieldDecorator('email', {
-            rules: [{ required: true, message: 'Please input your email' }],
-          })(
-            <Input prefix={<Icon type="user" style={{ color: '#1890ff' }} />} placeholder="Email" />,
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your password' }],
-          })(
-            <Input prefix={<Icon type="lock" style={{ color: '#1890ff' }} />} type="password" placeholder="Password" />,
-          )}
-        </FormItem>
-        <FormItem>
-          <Row>
-            <Col span={12}>
-              {getFieldDecorator('remember', {
-                valuePropName: 'checked',
-                initialValue: true,
-              })(
-                <Checkbox>Remember me</Checkbox>,
-              )}
-            </Col>
-            <Col span={12} style={{ textAlign: 'right' }}>
-              <a className="login-form-forgot" href="">Forgot password</a>
-            </Col>
-          </Row>
+LoginForm.defaultProps = {
+  loading: false,
+};
 
-          <Button type="primary" htmlType="submit">
-            Log in
-          </Button>
-        </FormItem>
-      </Form>
-    );
-  }
-}
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
+};
 
-export default compose(
-  Layout,
-  Form.create(),
-)(LoginPage);
+export default antForm(LoginForm);

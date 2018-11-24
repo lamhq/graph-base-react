@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const common = require('./webpack.common.js');
@@ -25,6 +26,10 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
+
+      /**
+       * Load normal css file
+       */
       {
         test: /\.css$/,
         loader: [
@@ -32,13 +37,19 @@ module.exports = merge(common, {
           'css-loader',
         ],
       },
-      // load less file
+
+      /**
+       * Load application less css file
+       */
       {
         test: /\.less$/,
+        include: [
+          path.resolve(__dirname, 'src'),
+        ],
         loader: [
           // add CSS to the DOM by injecting a <style> tag
           'style-loader',
-          // allow importing css files
+          // allow importing css files in js code
           {
             loader: 'css-loader',
             options: {
@@ -52,6 +63,30 @@ module.exports = merge(common, {
           'less-loader',
         ],
       },
+
+      /**
+       * Customize ant design library
+       */
+      {
+        test: /\.less$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/antd'),
+        ],
+        loader: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'primary-color': '#1890ff',
+              },
+              javascriptEnabled: true,
+            },
+          },
+        ],
+      },
+
     ],
   },
 });

@@ -20,6 +20,7 @@ function antForm(WrappedComponent) {
      */
     componentDidMount() {
       const { form, initialValues, errors } = this.props;
+      form.setFieldsInitialValue(initialValues);
       form.setFieldsValue(initialValues);
       this.setErrors(errors);
     }

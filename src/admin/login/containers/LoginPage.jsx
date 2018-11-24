@@ -1,5 +1,18 @@
 import React from 'react';
-import WrappedRegistrationForm from '../test';
+// import gql from 'graphql-tag';
+// import { Mutation } from 'react-apollo';
+
+import GuestLayout from '../../layout/guest';
+import LoginForm from '../components/LoginForm';
+
+// const ADD_TODO = gql`
+//   mutation AddTodo($type: String!) {
+//     addTodo(type: $type) {
+//       id
+//       type
+//     }
+//   }
+// `;
 
 class LoginPage extends React.Component {
   state = {
@@ -8,30 +21,19 @@ class LoginPage extends React.Component {
   }
 
   onSubmit = (values) => {
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        errors: {
-          email: ['Email already existed'],
-          password: ['Password is so weak'],
-        },
-      });
-    }, 1000);
+    console.log(values);
   }
 
   render() {
     const data = {
-      email: 'abc@m.mm',
-      password: '1',
-      confirmPassword: '1',
-      prefix: '87',
-      phone: '123456',
+      email: '',
+      password: '',
+      remember: true,
     };
     const { loading, errors } = this.state;
 
     return (
-      <WrappedRegistrationForm
+      <LoginForm
         initialValues={data}
         onSubmit={this.onSubmit}
         loading={loading}
@@ -41,4 +43,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default GuestLayout(LoginPage);
