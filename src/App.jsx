@@ -1,20 +1,25 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
+import { ApolloProvider } from 'react-apollo';
 
 import store, { history } from './store';
+import client from './apollo-client';
+
 import LoginPage from './admin/login';
 
 const App = () => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route path="/" component={LoginPage} exact />
-      </Switch>
-    </ConnectedRouter>
-  </Provider>
+  <ReduxProvider store={store}>
+    <ApolloProvider client={client}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route path="/" component={LoginPage} exact />
+        </Switch>
+      </ConnectedRouter>
+    </ApolloProvider>
+  </ReduxProvider>
 );
 
 export default hot(module)(App);

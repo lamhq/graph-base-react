@@ -24,7 +24,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.mjs', '.js', '.jsx'],
     // Tell webpack what directories should be searched when resolving modules.
     modules: ['node_modules'],
   },
