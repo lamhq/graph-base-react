@@ -1,44 +1,59 @@
 import React from 'react';
-// import gql from 'graphql-tag';
-// import { Mutation } from 'react-apollo';
+import PropTypes from 'prop-types';
+import { Mutation } from 'react-apollo';
+import { message } from 'antd';
+import { Redirect } from 'react-router';
 
+import { getErrorMessage, getSubmissionErrors, saveAccessToken } from '../../../common/utils/core';
 import GuestLayout from '../../layout/guest';
 import LoginForm from '../components/LoginForm';
-
-// const ADD_TODO = gql`
-//   mutation AddTodo($type: String!) {
-//     addTodo(type: $type) {
-//       id
-//       type
-//     }
-//   }
-// `;
+import { loginMutation } from '../query.gql';
 
 class LoginPage extends React.Component {
-  state = {
-    loading: false,
-    errors: {},
+  static propTypes = {
+    location: PropTypes.object.isRequired,
   }
 
-  onSubmit = (values) => {
-    console.log(values);
+  state = {
+    redirectToReferrer: false,
+  }
+
+  onSubmit = async (values) => {
+    try {
+      const data = await this.doLogin({ variables: values });
+      saveAccessToken(data.login);
+      this.setState({ redirectToReferrer: true });
+    } catch (error) {
+      message.error(getErrorMessage(error));
+    }
   }
 
   render() {
-    const data = {
-      email: '',
-      password: '',
-      remember: true,
-    };
-    const { loading, errors } = this.state;
+    const { redirectToReferrer } = this.state;
+    const { location } = this.props;
+    const { from } = location.state || { from: { pathname: '/dashboard' } };
+    if (redirectToReferrer) return <Redirect to={from} />;
 
+    const initialValues = {
+      email: 'john@mailinator.com',
+      password: '',
+    };
     return (
-      <LoginForm
-        initialValues={data}
-        onSubmit={this.onSubmit}
-        loading={loading}
-        errors={errors}
-      />
+      <Mutation mutation={loginMutation}>
+        {(doLogin, { data, loading, error }) => {
+          this.doLogin = doLogin;
+          return (
+            <React.Fragment>
+              <LoginForm
+                initialValues={initialValues}
+                onSubmit={this.onSubmit}
+                loading={loading}
+                errors={getSubmissionErrors(error)}
+              />
+            </React.Fragment>
+          );
+        }}
+      </Mutation>
     );
   }
 }

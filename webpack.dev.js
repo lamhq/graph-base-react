@@ -13,9 +13,9 @@ module.exports = merge(common, {
     contentBase: './dist',
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/graphql': 'http://localhost:4000',
     },
-    port: 3001,
+    port: 4001,
   },
   plugins: [
     // Enables Hot Module Replacement, otherwise known as HMR
