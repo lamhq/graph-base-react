@@ -9,13 +9,15 @@ import store, { history } from './store';
 import client from './apollo-client';
 
 import LoginPage from './admin/login';
+import ProfilePage from './admin/profile';
 
 const App = () => (
   <ReduxProvider store={store}>
     <ApolloProvider client={client}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/" component={LoginPage} exact />
+          <Route path="/admin/login" component={LoginPage} exact />
+          <Route path="/admin/profile" component={ProfilePage} exact />
         </Switch>
       </ConnectedRouter>
     </ApolloProvider>

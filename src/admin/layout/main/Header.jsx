@@ -3,20 +3,35 @@ import PropTypes from 'prop-types';
 import {
   Layout, Menu, Icon, Dropdown, Avatar,
 } from 'antd';
+import { ApolloConsumer } from 'react-apollo';
 
+import { clearAccessToken } from '../../../common/utils/core';
 import styles from './styles.less';
+
+function logout(client) {
+  client.writeData({ data: { token: null } });
+  clearAccessToken();
+}
+
+const LogoutMenuItem = props => (
+  <ApolloConsumer>
+    {client => (
+      <Menu.Item {...props} onClick={() => logout(client)}>
+        <Icon type="poweroff" />
+        Logout
+      </Menu.Item>
+    )}
+  </ApolloConsumer>
+);
 
 const menu = (
   <Menu>
-    <Menu.Item key="1" className={styles.headerDropdownItem}>
+    <Menu.Item className={styles.headerDropdownItem}>
       <Icon type="user" />
       Profile
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="3">
-      <Icon type="poweroff" />
-      Logout
-    </Menu.Item>
+    <LogoutMenuItem />
   </Menu>
 );
 

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd';
+import { compose } from 'redux';
+
 import Header from './Header';
 import Sidebar from './Sidebar';
+import ErrorPage from '../../error';
+import { LoginRequired, ErrorBoundary } from '../../../common/hoc';
 
 function MainLayout(WrappedComponent) {
   class Wrapper extends Component {
@@ -34,4 +38,8 @@ function MainLayout(WrappedComponent) {
   return Wrapper;
 }
 
-export default MainLayout;
+export default compose(
+  LoginRequired('/admin/login'),
+  MainLayout,
+  ErrorBoundary(ErrorPage),
+);
