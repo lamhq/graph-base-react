@@ -12,17 +12,14 @@ module.exports = merge(common, {
     open: true,
     contentBase: './dist',
     historyApiFallback: true,
+    port: 4001,
     proxy: {
       '/graphql': 'http://localhost:4000',
     },
-    port: 4001,
   },
   plugins: [
     // Enables Hot Module Replacement, otherwise known as HMR
     new webpack.HotModuleReplacementPlugin(),
-    // This plugin will cause the relative path of the module
-    // to be displayedwhen HMR is enabled
-    new webpack.NamedModulesPlugin(),
   ],
   module: {
     rules: [

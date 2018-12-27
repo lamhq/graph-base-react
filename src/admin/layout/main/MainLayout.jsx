@@ -4,8 +4,7 @@ import { compose } from 'redux';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
-import ErrorPage from '../../error';
-import { LoginRequired, ErrorBoundary } from '../../../common/hoc';
+import { requireLogin, handleError } from '../../../common/hoc';
 
 function MainLayout(WrappedComponent) {
   class Wrapper extends Component {
@@ -39,7 +38,7 @@ function MainLayout(WrappedComponent) {
 }
 
 export default compose(
-  LoginRequired('/admin/login'),
+  requireLogin('/admin/login'),
   MainLayout,
-  ErrorBoundary(ErrorPage),
+  handleError,
 );

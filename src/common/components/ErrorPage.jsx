@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Raven from '../../../common/utils/sentry';
+import Raven from '../utils/sentry';
 
 class ErrorPage extends Component {
   onReportClick = () => {

@@ -19,6 +19,7 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
+    // Extract css from the bundle into a separate file.
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional

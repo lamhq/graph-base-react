@@ -1,9 +1,11 @@
 import React from 'react';
 import { Row, Col } from 'antd';
+import { compose } from 'redux';
 
 import styles from './styles.less';
 import logo from '../../../assets/logo.svg';
 import config from '../../../config';
+import { handleError } from '../../../common/hoc';
 
 function GuestLayout(WrappedComponent) {
   const Wrapper = props => (
@@ -29,4 +31,7 @@ function GuestLayout(WrappedComponent) {
   return Wrapper;
 }
 
-export default GuestLayout;
+export default compose(
+  GuestLayout,
+  handleError,
+);

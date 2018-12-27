@@ -1,7 +1,7 @@
-import LoginRequired from './LoginRequired';
-import ErrorBoundary from './ErrorBoundary';
+import requireLogin from './requireLogin';
+import handleError from './handleError';
 
 export {
-  LoginRequired,
-  ErrorBoundary,
+  requireLogin,
+  handleError,
 };

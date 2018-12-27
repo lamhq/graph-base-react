@@ -10,7 +10,7 @@ import Raven from '../utils/sentry';
  *
  * @param {Mixed} ErrorPage react component for displaying error
  */
-const ErrorBoundary = ErrorPage => (WrappedComponent) => {
+const ErrorBoundary = (WrappedComponent) => {
   class Wrapper extends Component {
     state = {
       hasError: false,
@@ -28,7 +28,7 @@ const ErrorBoundary = ErrorPage => (WrappedComponent) => {
     render() {
       const { hasError, ...errorProps } = this.state;
       return hasError
-        ? <ErrorPage {...this.props} {...errorProps} />
+        ? <p>Error</p>
         : <WrappedComponent {...this.props} />;
     }
   }
