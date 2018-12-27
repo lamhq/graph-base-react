@@ -9,6 +9,7 @@ import { clearAccessToken } from '../../../common/utils/core';
 import styles from './styles.less';
 
 function logout(client) {
+  client.resetStore();
   client.writeData({ data: { token: null } });
   clearAccessToken();
 }

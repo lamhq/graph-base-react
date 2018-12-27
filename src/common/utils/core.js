@@ -1,9 +1,20 @@
+/**
+ * Get error message to display to user from graphql error response
+ * @param {Object} error
+ */
 export function getErrorMessage(error) {
-  return error.graphQLErrors[0].message;
+  if (error.graphQLErrors.length > 0) {
+    return error.graphQLErrors[0].message;
+  }
+  return '';
 }
 
+/**
+ * Get server's form validation error from graphql error response
+ * @param {Object} error
+ */
 export function getSubmissionErrors(error) {
-  if (!error || !error.graphQLErrors) {
+  if (!error || error.graphQLErrors.length === 0) {
     return undefined;
   }
 
