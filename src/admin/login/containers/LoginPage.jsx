@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Mutation } from 'react-apollo';
-import { message } from 'antd';
 import { Redirect } from 'react-router';
 
-import { getErrorMessage, getSubmissionErrors, saveAccessToken } from '../../../common/utils/core';
+import { getSubmissionErrors, saveAccessToken } from '../../../common/utils/core';
 import GuestLayout from '../../layout/guest';
 import LoginForm from '../components/LoginForm';
 import { loginMutation } from '../query.gql';
@@ -12,48 +11,54 @@ import { loginMutation } from '../query.gql';
 class LoginPage extends React.Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
+    mutation: PropTypes.func.isRequired,
+    result: PropTypes.object.isRequired,
   }
 
   state = {
     logged: false,
   }
 
+  handleSubmit = async (values) => {
+    const { mutation: login, result: { client } } = this.props;
+    const resp = await login({ variables: values });
+    const token = resp.data.login;
+    saveAccessToken(token);
+    client.writeData({ data: { token } });
+    this.setState({ logged: true });
+  }
+
   render() {
+    const { location, result: { loading, error } } = this.props;
     const { logged } = this.state;
-    const { location } = this.props;
     const { from } = location.state || { from: { pathname: '/admin/profile' } };
     if (logged) return <Redirect to={from} />;
-
+    if (error) {
+      console.log('1111');
+      console.log(error);
+    }
     const initialValues = {
       email: 'john@mailinator.com',
       password: '1',
     };
 
     return (
-      <Mutation mutation={loginMutation}>
-        {(doLogin, { loading, error, client }) => (
-          <React.Fragment>
-            <LoginForm
-              initialValues={initialValues}
-              onSubmit={async (values) => {
-                try {
-                  const resp = await doLogin({ variables: values });
-                  const token = resp.data.login;
-                  saveAccessToken(token);
-                  client.writeData({ data: { token } });
-                  this.setState({ logged: true });
-                } catch (err) {
-                  message.error(getErrorMessage(err));
-                }
-              }}
-              loading={loading}
-              errors={getSubmissionErrors(error)}
-            />
-          </React.Fragment>
-        )}
-      </Mutation>
+      <LoginForm
+        initialValues={initialValues}
+        onSubmit={this.handleSubmit}
+        loading={loading}
+        errors={getSubmissionErrors(error)}
+      />
     );
   }
 }
 
-export default GuestLayout(LoginPage);
+const Wrapper = props => (
+  <Mutation mutation={loginMutation}>
+    {(mutation, result) => (
+      <LoginPage mutation={mutation} result={result} {...props} />
+    )}
+  </Mutation>
+);
+
+export default GuestLayout(Wrapper);
