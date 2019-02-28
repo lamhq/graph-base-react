@@ -1,28 +1,20 @@
 {
   "presets": [
-    "react",
     [
-      "env",
+      "@babel/preset-env",
       {
+        "useBuiltIns": "usage",
         "targets": {
           "browsers": [
-            "last 2 versions",
-            "safari >= 7"
+            "last 2 versions"
           ]
         }
       }
     ],
-    "stage-2"
+    "@babel/preset-react",
+    "@babel/preset-flow"
   ],
   "plugins": [
-    [
-      "import",
-      {
-        "libraryName": "antd",
-        "libraryDirectory": "es",
-        "style": true
-      }
-    ],
     "react-hot-loader/babel"
   ]
 }

@@ -1,27 +1,19 @@
+// @flow
 import React from 'react';
-import { Provider as ReduxProvider } from 'react-redux';
-import { Route, Switch } from 'react-router';
-import { ConnectedRouter } from 'connected-react-router';
-import { hot } from 'react-hot-loader';
-import { ApolloProvider } from 'react-apollo';
+import { hot } from 'react-hot-loader/root';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import store, { history } from './store';
-import client from './apollo-client';
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/about" component={About} />
+        <Route path="/topics" component={Topics} />
+        <Route component={NoMatch} />
+      </Switch>
+    </Router>
+  );
+}
 
-import LoginPage from './admin/login';
-import ProfilePage from './admin/profile';
-
-const App = () => (
-  <ReduxProvider store={store}>
-    <ApolloProvider client={client}>
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route path="/admin/login" component={LoginPage} exact />
-          <Route path="/admin/profile" component={ProfilePage} exact />
-        </Switch>
-      </ConnectedRouter>
-    </ApolloProvider>
-  </ReduxProvider>
-);
-
-export default hot(module)(App);
+export default hot(App);
