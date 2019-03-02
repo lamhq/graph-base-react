@@ -54,6 +54,15 @@ module.exports = {
           'css-loader',
         ],
       },
+      // load scss file
+      {
+        test: /\.(scss|sass)$/,
+        loader: [
+          nodeEnv === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
       // load javascript/react components
       {
         test: /\.(js|jsx)$/,
