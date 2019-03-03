@@ -1,4 +1,4 @@
-# GraphQL Base (React)
+# GraphQL Boilerplate React
 
 ## Introduction
 
