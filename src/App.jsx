@@ -1,17 +1,17 @@
 // @flow
-import React from 'react';
+import React, { Suspense } from 'react';
 import { hot } from 'react-hot-loader/root';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import routes from './routes';
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path="/" component={Home} exact />
-        <Route path="/about" component={About} />
-        <Route path="/topics" component={Topics} />
-        <Route component={NoMatch} />
-      </Switch>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          {routes}
+        </Switch>
+      </Suspense>
     </Router>
   );
 }

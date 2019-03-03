@@ -1,8 +1,16 @@
+// @flow
+export function foo(x: ?number): string {
+  if (x) {
+    return x;
+  }
+  return 'default string';
+}
+
 /**
  * Get error message to display to user from graphql error response
  * @param {Object} error
  */
-export function getErrorMessage(error) {
+export function getErrorMessage(error: mixed) {
   if (error.graphQLErrors.length > 0) {
     return error.graphQLErrors[0].message;
   }
