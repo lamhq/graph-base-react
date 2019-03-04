@@ -1,20 +1,19 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Route, Switch } from 'react-router';
-import { ConnectedRouter } from 'connected-react-router';
-import { hot } from 'react-hot-loader';
+// @flow
+import React, { Suspense } from 'react';
+import { hot } from 'react-hot-loader/root';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import routes from './routes';
 
-import store, { history } from './store';
-import TestPage from './TestPage';
+function App() {
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          {routes}
+        </Switch>
+      </Suspense>
+    </Router>
+  );
+}
 
-const App = () => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route path="/" component={TestPage} exact />
-      </Switch>
-    </ConnectedRouter>
-  </Provider>
-);
-
-export default hot(module)(App);
+export default hot(App);

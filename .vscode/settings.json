@@ -4,4 +4,5 @@
   "editor.formatOnPaste": true,
   "files.trimTrailingWhitespace": true,
   "eslint.autoFixOnSave": true,
+  "javascript.validate.enable": false,
 }

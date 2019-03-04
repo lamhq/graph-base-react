@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "flowtype"
+  ],
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "__DEVTOOLS__": true
+  },
+  "rules": {
+    "react/forbid-prop-types": [
+      "off"
+    ]
+  }
+}
