@@ -3,6 +3,9 @@ import {
   whiteColor,
 } from '../../../common/material-ui/assets/jss/material-dashboard-pro-react';
 
+import buttonStyle from '../../../common/material-ui/assets/jss/material-dashboard-pro-react/components/buttonStyle';
+
+
 const loginPageStyle = () => ({
   textCenter: {
     textAlign: 'center',
@@ -26,7 +29,7 @@ const loginPageStyle = () => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: '400px',
+    minHeight: '350px',
     flexDirection: 'column',
   },
   socialLine: {
@@ -40,6 +43,11 @@ const loginPageStyle = () => ({
     backgroundColor: '#fff',
     color: '#000',
     marginBottom: '20px',
+  },
+  loginButton: {
+    ...buttonStyle.button,
+    ...buttonStyle.success,
+    backgroundColor: '#19C2A8',
   },
 });
 

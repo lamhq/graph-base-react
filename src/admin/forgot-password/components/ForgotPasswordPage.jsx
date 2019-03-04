@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
@@ -27,6 +28,8 @@ class ForgotPasswordPage extends React.PureComponent {
     this.state = {
       cardAnimaton: 'cardHidden',
     };
+
+    this.handleSendResetPassword = this.handleSendResetPassword.bind(this);
   }
 
   componentDidMount() {
@@ -44,9 +47,31 @@ class ForgotPasswordPage extends React.PureComponent {
     this.timeOutFunction = null;
   }
 
+  handleSendResetPassword() {
+    const { classes } = this.props;
+    this.setState({
+      alert: (
+        <SweetAlert
+          success
+          style={{ display: 'block', marginTop: '-180px', height: '300px' }}
+          title="Sent"
+          onConfirm={() => this.hideAlert()}
+          confirmBtnText="Login"
+          confirmBtnCssClass={classes.loginButton}
+        >
+          Please check your email to reset your password
+        </SweetAlert>
+      ),
+    });
+  }
+
+  hideAlert() {
+    this.setState({ alert: null });
+  }
+
   render() {
     const { classes } = this.props;
-    const { cardAnimaton } = this.state;
+    const { cardAnimaton, alert } = this.state;
     return (
       <GridItem xs={12} sm={6} md={4}>
         <form>
@@ -69,7 +94,7 @@ class ForgotPasswordPage extends React.PureComponent {
             </CardHeader>
             <CardBody className={classes.cardBody}>
               <CustomInput
-                labelText="Email..."
+                labelText="Email"
                 id="email"
                 formControlProps={{
                   fullWidth: true,
@@ -82,12 +107,17 @@ class ForgotPasswordPage extends React.PureComponent {
                   ),
                 }}
               />
-              <Button color="success" className={`${classes.marginRight} ${classes.resetButton}`}>
+              <Button
+                color="success"
+                className={`${classes.marginRight} ${classes.resetButton}`}
+                onClick={this.handleSendResetPassword}
+              >
                 Reset Password
               </Button>
             </CardBody>
           </Card>
         </form>
+        {alert}
       </GridItem>
     );
   }
