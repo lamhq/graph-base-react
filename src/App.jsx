@@ -2,7 +2,9 @@
 import React, { Suspense } from 'react';
 import { createBrowserHistory } from 'history';
 import { hot } from 'react-hot-loader/root';
-import { Router, Route, Switch } from 'react-router-dom';
+import {
+  Router, Route, Switch, Redirect,
+} from 'react-router-dom';
 import routes from './routes';
 
 export const history = createBrowserHistory();
@@ -20,6 +22,7 @@ function App() {
               exact
             />
           ))}
+          <Route path="/" render={() => <Redirect to="/admin/dashboard" />} exact />
           {/* <Route component={NoMatch} /> */}
         </Switch>
       </Suspense>
