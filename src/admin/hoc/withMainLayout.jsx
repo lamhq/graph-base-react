@@ -2,6 +2,8 @@
 import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -10,6 +12,7 @@ import '../../common/material-ui/assets/scss/material-dashboard-pro-react.scss';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 // core components
 import appStyle from '../../common/material-ui/assets/jss/material-dashboard-pro-react/layouts/adminStyle';
@@ -19,7 +22,28 @@ import AdminNavbar from '../../common/material-ui/components/Navbars/AdminNavbar
 import Footer from '../../common/material-ui/components/Footer/Footer';
 import Sidebar from '../../common/material-ui/components/Sidebar/Sidebar';
 
+
 let ps;
+
+const menuItems = [
+  {
+    path: '/admin/dashboard',
+    name: 'Dashboard',
+    icon: DashboardIcon,
+  },
+  {
+    collapse: true,
+    name: 'Users',
+    state: 'userCollapse',
+    views: [
+      {
+        path: '/admin/users',
+        name: 'Pricing Page',
+        mini: 'PP',
+      },
+    ],
+  },
+];
 
 function withMainLayout(WrappedComponent) {
   class MainLayout extends React.Component {
@@ -84,7 +108,7 @@ function withMainLayout(WrappedComponent) {
             return collapseActiveRoute;
           }
         } else if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+          window.location.href.indexOf(routes[i].path) !== -1
         ) {
           return routes[i].name;
         }
@@ -121,7 +145,7 @@ function withMainLayout(WrappedComponent) {
       return (
         <div className={classes.wrapper}>
           <Sidebar
-            routes={[]}
+            routes={menuItems}
             logoText="Creative Tim"
             logo={logo}
             image={image}
@@ -137,7 +161,7 @@ function withMainLayout(WrappedComponent) {
             <AdminNavbar
               sidebarMinimize={this.sidebarMinimize}
               miniActive={miniActive}
-              brandText="Test"
+              brandText={this.getActiveRoute(menuItems)}
               handleDrawerToggle={this.handleDrawerToggle}
               {...rest}
             />
@@ -156,6 +180,9 @@ function withMainLayout(WrappedComponent) {
   }
 
   MainLayout.displayName = 'MainLayout';
-  return withStyles(appStyle)(MainLayout);
+  return compose(
+    withRouter,
+    withStyles(appStyle),
+  )(MainLayout);
 }
 export default withMainLayout;

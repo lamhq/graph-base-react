@@ -56,6 +56,7 @@
     "apollo-boost": "^0.3.1",
     "classnames": "^2.2.6",
     "graphql": "^14.1.1",
+    "history": "^4.7.2",
     "perfect-scrollbar": "^1.4.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
