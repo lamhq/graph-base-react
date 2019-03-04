@@ -1,4 +1,5 @@
 import {
+  container,
   whiteColor,
   blackColor,
   hexToRgb
@@ -12,7 +13,7 @@ const pagesStyle = theme => ({
     top: "0"
   },
   fullPage: {
-    padding: "120px 0",
+    // padding: "120px 0",
     position: "relative",
     minHeight: "100vh",
     display: "flex!important",
@@ -45,7 +46,21 @@ const pagesStyle = theme => ({
       left: "0",
       zIndex: "2"
     }
-  }
+  },
+  topLayer: {
+    zIndex: 10,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  container: {
+    ...container,
+  },
 });
 
 export default pagesStyle;

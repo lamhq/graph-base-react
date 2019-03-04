@@ -7,6 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // core components
 import pagesStyle from '../../common/material-ui/assets/jss/material-dashboard-pro-react/layouts/authStyle';
 import login from '../../common/material-ui/assets/img/login.jpeg';
+import GridContainer from '../../common/material-ui/components/Grid/GridContainer';
 
 function withGuestLayout(WrappedComponent) {
   class GuestLayout extends React.Component {
@@ -29,8 +30,11 @@ function withGuestLayout(WrappedComponent) {
             <div
               className={classes.fullPage}
               style={{ backgroundImage: `url(${this.getBgImage()})` }}
-            >
-              <WrappedComponent {...rest} />
+            />
+            <div className={classes.topLayer}>
+              <GridContainer className={classes.container} justify="center">
+                <WrappedComponent {...rest} />
+              </GridContainer>
             </div>
           </div>
         </div>
