@@ -16,7 +16,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Icon from "@material-ui/core/Icon";
 
 // core components
-import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
+import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
 
 import sidebarStyle from "../../assets/jss/material-dashboard-pro-react/components/sidebarStyle.jsx";
 
@@ -177,13 +177,13 @@ class Sidebar extends React.Component {
                 typeof prop.icon === "string" ? (
                   <Icon className={itemIcon}>{prop.icon}</Icon>
                 ) : (
-                  <prop.icon className={itemIcon} />
-                )
+                    <prop.icon className={itemIcon} />
+                  )
               ) : (
-                <span className={collapseItemMini}>
-                  {rtlActive ? prop.rtlMini : prop.mini}
-                </span>
-              )}
+                  <span className={collapseItemMini}>
+                    {rtlActive ? prop.rtlMini : prop.mini}
+                  </span>
+                )}
               <ListItemText
                 primary={rtlActive ? prop.rtlName : prop.name}
                 secondary={
@@ -273,13 +273,13 @@ class Sidebar extends React.Component {
               typeof prop.icon === "string" ? (
                 <Icon className={itemIcon}>{prop.icon}</Icon>
               ) : (
-                <prop.icon className={itemIcon} />
-              )
+                  <prop.icon className={itemIcon} />
+                )
             ) : (
-              <span className={collapseItemMini}>
-                {rtlActive ? prop.rtlMini : prop.mini}
-              </span>
-            )}
+                <span className={collapseItemMini}>
+                  {rtlActive ? prop.rtlMini : prop.mini}
+                </span>
+              )}
             <ListItemText
               primary={rtlActive ? prop.rtlName : prop.name}
               disableTypography={true}

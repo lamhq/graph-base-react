@@ -1,4 +1,5 @@
 import React from 'react';
+import { withMainLayout } from '../../hoc';
 
 function DashboardPage() {
   return (
@@ -6,4 +7,4 @@ function DashboardPage() {
   );
 }
 
-export default DashboardPage;
+export default withMainLayout(DashboardPage);

@@ -25,7 +25,7 @@ function withGuestLayout(WrappedComponent) {
       const { classes, ...rest } = this.props;
       return (
         <div>
-          <div className={classes.wrapper} ref="wrapper">
+          <div className={classes.wrapper}>
             <div
               className={classes.fullPage}
               style={{ backgroundImage: `url(${this.getBgImage()})` }}

@@ -11,16 +11,51 @@ const ViewUserPage = lazy(() => import('./admin/manage-users/view'));
 const ProfilePage = lazy(() => import('./admin/profile'));
 
 const routes = [
-  <Route path="/" component={DashboardPage} exact />,
-  <Route path="/admin/dashboard" component={DashboardPage} exact />,
-  <Route path="/admin/forgot-password" component={ForgotPasswordPage} exact />,
-  <Route path="/admin/login" component={LoginPage} exact />,
-  <Route path="/admin/profile" component={ProfilePage} exact />,
-  <Route path="/admin/users/add" component={AddUserPage} exact />,
-  <Route path="/admin/users/edit/:id" component={EditUserPage} exact />,
-  <Route path="/admin/users/view/:id" component={ViewUserPage} exact />,
-  <Route path="/admin/users" component={ListUserPage} exact />,
-  // <Route component={NoMatch} />
+  {
+    path: '/',
+    name: 'home',
+    component: DashboardPage,
+  },
+  {
+    path: '/admin/dashboard',
+    name: 'dashboard',
+    component: DashboardPage,
+  },
+  {
+    path: '/admin/forgot-password',
+    name: 'forgot-password',
+    component: ForgotPasswordPage,
+  },
+  {
+    path: '/admin/login',
+    name: 'login',
+    component: LoginPage,
+  },
+  {
+    path: '/admin/profile',
+    name: 'profile',
+    component: ProfilePage,
+  },
+  {
+    path: '/admin/users/add',
+    name: 'add-user',
+    component: AddUserPage,
+  },
+  {
+    path: '/admin/users/edit/:id',
+    name: 'profile',
+    component: EditUserPage,
+  },
+  {
+    path: '/admin/users/view/:id',
+    name: 'profile',
+    component: ViewUserPage,
+  },
+  {
+    path: '/admin/users',
+    name: 'profile',
+    component: ListUserPage,
+  },
 ];
 
 export default routes;
