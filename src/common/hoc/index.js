@@ -1,7 +1,1 @@
-import requireLogin from './requireLogin';
-import handleError from './handleError';
-
-export {
-  requireLogin,
-  handleError,
-};
+export { default as withReduxField } from './withReduxField';
