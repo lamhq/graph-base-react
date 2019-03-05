@@ -10,6 +10,7 @@ import login from '../../common/material-ui/assets/img/login.jpeg';
 import GridContainer from '../../common/material-ui/components/Grid/GridContainer';
 
 function withGuestLayout(WrappedComponent) {
+  @withStyles(pagesStyle)
   class GuestLayout extends React.Component {
     static propTypes = {
       classes: PropTypes.object.isRequired,
@@ -42,7 +43,7 @@ function withGuestLayout(WrappedComponent) {
     }
   }
   GuestLayout.displayName = 'GuestLayout';
-  return withStyles(pagesStyle)(GuestLayout);
+  return GuestLayout;
 }
 
 export default withGuestLayout;

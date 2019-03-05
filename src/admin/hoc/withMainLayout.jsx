@@ -3,7 +3,6 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -47,6 +46,8 @@ const menuItems = [
 ];
 
 function withMainLayout(WrappedComponent) {
+  @withStyles(appStyle)
+  @withRouter
   class MainLayout extends React.Component {
     static propTypes = {
       classes: PropTypes.object.isRequired,
@@ -181,9 +182,7 @@ function withMainLayout(WrappedComponent) {
   }
 
   MainLayout.displayName = 'MainLayout';
-  return compose(
-    withRouter,
-    withStyles(appStyle),
-  )(MainLayout);
+  return MainLayout;
 }
+
 export default withMainLayout;

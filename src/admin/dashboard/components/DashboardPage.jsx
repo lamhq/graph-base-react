@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -111,4 +112,7 @@ DashboardPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withMainLayout(withStyles(styles)(DashboardPage));
+export default compose(
+  withMainLayout,
+  withStyles(styles),
+)(DashboardPage);

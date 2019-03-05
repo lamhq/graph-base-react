@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -22,7 +21,13 @@ import CardFooter from '../../../common/material-ui/components/Card/CardFooter';
 import loginPageStyle from '../../../common/material-ui/assets/jss/material-dashboard-pro-react/views/loginPageStyle';
 import { withGuestLayout } from '../../hoc';
 
+@withGuestLayout
+@withStyles(loginPageStyle)
 class LoginPage extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  }
+
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
@@ -106,11 +111,4 @@ class LoginPage extends React.Component {
   }
 }
 
-LoginPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default compose(
-  withGuestLayout,
-  withStyles(loginPageStyle),
-)(LoginPage);
+export default LoginPage;
