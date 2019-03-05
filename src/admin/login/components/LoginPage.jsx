@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 
@@ -22,88 +22,78 @@ import CardFooter from '../../../common/material-ui/components/Card/CardFooter';
 import loginPageStyle from '../../../common/material-ui/assets/jss/material-dashboard-pro-react/views/loginPageStyle';
 import { withGuestLayout } from '../../hoc';
 
-class LoginPage extends React.Component {
-  constructor(props) {
-    super(props);
-    // we use this to make the card to appear after the page has been rendered
-    this.state = {
-      cardAnimaton: 'cardHidden',
-    };
-  }
+function LoginPage(props) {
+  const [cardAnimaton, setCardAnimaton] = useState('cardHidden');
+  const { classes } = props;
+  let timer;
 
-  componentDidMount() {
-    // we add a hidden class to the card and after 700 ms we delete it and the transition appears
-    this.timeOutFunction = setTimeout(
-      () => {
-        this.setState({ cardAnimaton: '' });
-      },
+  useEffect(() => {
+    timer = setTimeout(
+      () => setCardAnimaton(''),
       700,
     );
-  }
 
-  componentWillUnmount() {
-    clearTimeout(this.timeOutFunction);
-    this.timeOutFunction = null;
-  }
+    return () => {
+      clearTimeout(timer);
+      timer = null;
+    };
+  });
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.container}>
-        <GridContainer justify="center">
-          <GridItem xs={12} sm={6} md={4}>
-            <form>
-              <Card login className={classes[this.state.cardAnimaton]}>
-                <CardHeader
-                  className={`${classes.cardHeader} ${classes.textCenter}`}
-                  color="rose"
-                >
-                  <h4 className={classes.cardTitle}>Log in</h4>
-                </CardHeader>
-                <CardBody>
-                  <CustomInput
-                    labelText="Email..."
-                    id="email"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Email className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <CustomInput
-                    labelText="Password"
-                    id="password"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Icon className={classes.inputAdornmentIcon}>
-                            lock_outline
-                          </Icon>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </CardBody>
-                <CardFooter className={classes.justifyContentCenter}>
-                  <Button color="rose" simple size="lg" block>
-                    Let's Go
-                  </Button>
-                </CardFooter>
-              </Card>
-            </form>
-          </GridItem>
-        </GridContainer>
-      </div>
-    );
-  }
+  return (
+    <div className={classes.container}>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={6} md={4}>
+          <form>
+            <Card login className={classes[cardAnimaton]}>
+              <CardHeader
+                className={`${classes.cardHeader} ${classes.textCenter}`}
+                color="rose"
+              >
+                <h4 className={classes.cardTitle}>Log in</h4>
+              </CardHeader>
+              <CardBody>
+                <CustomInput
+                  labelText="Email..."
+                  id="email"
+                  formControlProps={{
+                    fullWidth: true,
+                  }}
+                  inputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Email className={classes.inputAdornmentIcon} />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <CustomInput
+                  labelText="Password"
+                  id="password"
+                  formControlProps={{
+                    fullWidth: true,
+                  }}
+                  inputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Icon className={classes.inputAdornmentIcon}>
+                          lock_outline
+                        </Icon>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </CardBody>
+              <CardFooter className={classes.justifyContentCenter}>
+                <Button color="rose" simple size="lg" block>
+                  Let's Go
+                </Button>
+              </CardFooter>
+            </Card>
+          </form>
+        </GridItem>
+      </GridContainer>
+    </div>
+  );
 }
 
 LoginPage.propTypes = {
