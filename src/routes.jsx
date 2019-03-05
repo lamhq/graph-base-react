@@ -1,5 +1,4 @@
-import React, { lazy } from 'react';
-import { Route } from 'react-router-dom';
+import { lazy } from 'react';
 
 const DashboardPage = lazy(() => import('./admin/dashboard'));
 const ForgotPasswordPage = lazy(() => import('./admin/forgot-password'));
@@ -11,11 +10,6 @@ const ViewUserPage = lazy(() => import('./admin/manage-users/view'));
 const ProfilePage = lazy(() => import('./admin/profile'));
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: DashboardPage,
-  },
   {
     path: '/admin/dashboard',
     name: 'dashboard',

@@ -13,6 +13,7 @@ import '../../common/material-ui/assets/scss/material-dashboard-pro-react.scss';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import AccountIcon from '@material-ui/icons/AccountBox';
 
 // core components
 import appStyle from '../../common/material-ui/assets/jss/material-dashboard-pro-react/layouts/adminStyle';
@@ -33,13 +34,13 @@ const menuItems = [
   },
   {
     collapse: true,
-    name: 'Users',
+    name: 'Accounts',
+    icon: AccountIcon,
     state: 'userCollapse',
     views: [
       {
         path: '/admin/users',
-        name: 'Pricing Page',
-        mini: 'PP',
+        name: 'Admin',
       },
     ],
   },
