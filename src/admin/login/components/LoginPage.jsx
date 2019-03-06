@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { compose } from 'redux';
 
 // @material-ui/core components
@@ -20,7 +22,7 @@ import { withGuestLayout } from '../../hoc';
 
 function LoginPage(props) {
   const [cardAnimaton, setCardAnimaton] = useState('cardHidden');
-  const { classes } = props;
+  const { classes, login } = props;
 
   useEffect(() => {
     const timer = setTimeout(
@@ -35,6 +37,7 @@ function LoginPage(props) {
 
   function handleSubmit(values) {
     console.log(values);
+    login(values);
   }
 
   return (
@@ -65,9 +68,25 @@ function LoginPage(props) {
 
 LoginPage.propTypes = {
   classes: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 export default compose(
   withGuestLayout,
   withStyles(loginPageStyle),
+  graphql(
+    gql`
+      mutation login($email: String, $password: String){
+        login(email: $email, password: $password) {
+          value
+        }
+      }
+    `,
+    {
+      props: data => ({
+        login: data.mutate,
+        ...data,
+      }),
+    },
+  ),
 )(LoginPage);
