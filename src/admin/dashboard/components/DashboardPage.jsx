@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -20,9 +21,13 @@ import Danger from '../../../common/material-ui/components/Typography/Danger';
 
 import { withMainLayout } from '../../hoc';
 
+import { IBaseProps } from '../../../common/types';
+
 import styles from './styles';
 
-function DashboardPage(props) {
+interface IProps extends IBaseProps {}
+
+function DashboardPage(props: IProps) {
   const { classes } = props;
   return (
     <div>
@@ -106,9 +111,5 @@ function DashboardPage(props) {
     </div>
   );
 }
-
-DashboardPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withMainLayout(withStyles(styles)(DashboardPage));

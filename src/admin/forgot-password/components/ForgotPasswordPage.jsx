@@ -1,5 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+/* eslint comma-dangle: 0 */
+
+import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import SweetAlert from 'react-bootstrap-sweetalert';
 
@@ -15,116 +17,96 @@ import Button from '../../../common/material-ui/components/CustomButtons/Button'
 
 import { withGuestLayout } from '../../hoc';
 
+import { IBaseProps } from '../../../common/types';
+
 import styles from './styles';
 
-/* eslint space-before-function-paren:0 */
-/* eslint prefer-arrow-callback:0 */
-/* eslint func-names:0 */
+interface IProps extends IBaseProps {}
 
-class ForgotPasswordPage extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    // we use this to make the card to appear after the page has been rendered
-    this.state = {
-      cardAnimaton: 'cardHidden',
-    };
+function ForgotPasswordPage(props: IProps) {
+  const [cardAnimation, setCardAnimation] = React.useState('cardHidden');
+  const [alert, setAlert] = React.useState(null);
 
-    this.handleSendResetPassword = this.handleSendResetPassword.bind(this);
-  }
-
-  componentDidMount() {
-    // we add a hidden class to the card and after 700 ms we delete it and the transition appears
-    this.timeOutFunction = setTimeout(
-      function() {
-        this.setState({ cardAnimaton: '' });
-      }.bind(this),
+  React.useEffect(() => {
+    const timer = setTimeout(
+      () => setCardAnimation(''),
       700,
     );
+
+    return () => {
+      clearTimeout(timer);
+    };
+  });
+
+  function hideAlert() {
+    setAlert(null);
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timeOutFunction);
-    this.timeOutFunction = null;
-  }
-
-  handleSendResetPassword() {
-    const { classes } = this.props;
-    this.setState({
-      alert: (
-        <SweetAlert
-          success
-          style={{ display: 'block', marginTop: '-180px', height: '300px' }}
-          title="Sent"
-          onConfirm={() => this.hideAlert()}
-          confirmBtnText="Login"
-          confirmBtnCssClass={classes.loginButton}
-        >
-          Please check your email to reset your password
-        </SweetAlert>
-      ),
-    });
-  }
-
-  hideAlert() {
-    this.setState({ alert: null });
-  }
-
-  render() {
-    const { classes } = this.props;
-    const { cardAnimaton, alert } = this.state;
-    return (
-      <GridItem xs={12} sm={6} md={4}>
-        <form>
-          <Card login className={classes[cardAnimaton]}>
-            <CardHeader
-              className={`${classes.cardHeader} ${classes.textCenter}`}
-              color="primary"
-            >
-              <div className={classes.socialLine}>
-                <Button
-                  justIcon
-                  round
-                  color="#000"
-                  className={classes.goBackButton}
-                >
-                  <i className="fab material-icons">arrow_back</i>
-                </Button>
-              </div>
-              <h4 className={classes.cardTitle}>Forgot Password</h4>
-            </CardHeader>
-            <CardBody className={classes.cardBody}>
-              <CustomInput
-                labelText="Email"
-                id="email"
-                formControlProps={{
-                  fullWidth: true,
-                }}
-                inputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Email className={classes.inputAdornmentIcon} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <Button
-                color="success"
-                className={`${classes.marginRight} ${classes.resetButton}`}
-                onClick={this.handleSendResetPassword}
-              >
-                Reset Password
-              </Button>
-            </CardBody>
-          </Card>
-        </form>
-        {alert}
-      </GridItem>
+  function handleSendResetPassword() {
+    const { classes } = props;
+    setAlert(
+      <SweetAlert
+        success
+        style={{ display: 'block', marginTop: '-180px', height: '360px' }}
+        title="Sent"
+        onConfirm={() => hideAlert()}
+        confirmBtnText="Login"
+        confirmBtnCssClass={classes.loginButton}
+      >
+        Please check your email to reset your password
+      </SweetAlert>
     );
   }
-}
 
-ForgotPasswordPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  const { classes } = props;
+  return (
+    <GridItem xs={12} sm={6} md={4}>
+      <form>
+        <Card login className={classes[cardAnimation]}>
+          <CardHeader
+            className={`${classes.cardHeader} ${classes.textCenter}`}
+            color="primary"
+          >
+            <div className={classes.socialLine}>
+              <Button
+                justIcon
+                round
+                color="#000"
+                className={classes.goBackButton}
+              >
+                <i className="fab material-icons">arrow_back</i>
+              </Button>
+            </div>
+            <h4 className={classes.cardTitle}>Forgot Password</h4>
+          </CardHeader>
+          <CardBody className={classes.cardBody}>
+            <CustomInput
+              labelText="Email"
+              id="email"
+              formControlProps={{
+                fullWidth: true,
+              }}
+              inputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Email className={classes.inputAdornmentIcon} />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              color="success"
+              className={`${classes.marginRight} ${classes.resetButton}`}
+              onClick={handleSendResetPassword}
+            >
+              Reset Password
+            </Button>
+          </CardBody>
+        </Card>
+      </form>
+      {alert}
+    </GridItem>
+  );
+}
 
 export default withGuestLayout(withStyles(styles)(ForgotPasswordPage));

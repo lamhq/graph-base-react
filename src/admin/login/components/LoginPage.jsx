@@ -8,7 +8,6 @@ import { compose } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // core components
-import GridContainer from '../../../common/material-ui/components/Grid/GridContainer';
 import GridItem from '../../../common/material-ui/components/Grid/GridItem';
 import Card from '../../../common/material-ui/components/Card/Card';
 import CardBody from '../../../common/material-ui/components/Card/CardBody';
@@ -41,28 +40,24 @@ function LoginPage(props) {
   }
 
   return (
-    <div className={classes.container}>
-      <GridContainer justify="center">
-        <GridItem xs={12} sm={6} md={4}>
-          <Card login className={classes[cardAnimaton]}>
-            <CardHeader
-              className={`${classes.cardHeader} ${classes.textCenter}`}
-              color="rose"
-            >
-              <h4 className={classes.cardTitle}>Log in</h4>
-            </CardHeader>
-            <CardBody>
-              <LoginForm onSubmit={handleSubmit} />
-            </CardBody>
-            <CardFooter className={classes.justifyContentCenter}>
-              <Button type="submit" form="loginForm" color="rose" simple size="lg" block>
-                Login
-              </Button>
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
-    </div>
+    <GridItem xs={12} sm={6} md={4}>
+      <Card login className={classes[cardAnimaton]}>
+        <CardHeader
+          className={`${classes.cardHeader} ${classes.textCenter}`}
+          color="rose"
+        >
+          <h4 className={classes.cardTitle}>Log in</h4>
+        </CardHeader>
+        <CardBody>
+          <LoginForm onSubmit={handleSubmit} />
+        </CardBody>
+        <CardFooter className={classes.justifyContentCenter}>
+          <Button type="submit" form="loginForm" color="rose" simple size="lg" block>
+            Login
+          </Button>
+        </CardFooter>
+      </Card>
+    </GridItem>
   );
 }
 

@@ -1,5 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -9,15 +10,17 @@ import pagesStyle from '../../common/material-ui/assets/jss/material-dashboard-p
 import login from '../../common/material-ui/assets/img/login.jpeg';
 import GridContainer from '../../common/material-ui/components/Grid/GridContainer';
 
-function withGuestLayout(WrappedComponent) {
-  class GuestLayout extends React.Component {
-    static propTypes = {
-      classes: PropTypes.object.isRequired,
-    }
+function withGuestLayout(WrappedComponent: React.ElementType) {
+  type IProps = {
+    classes: Object;
+  };
 
+  class GuestLayout extends React.Component<IProps> {
     componentDidMount() {
-      document.body.style.overflow = 'unset';
-      document.body.style.margin = '0';
+      if (document.body) {
+        document.body.style.overflow = 'unset';
+        document.body.style.margin = '0';
+      }
     }
 
     getBgImage = () => login;

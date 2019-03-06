@@ -1,14 +1,16 @@
+// @flow
+
 /* eslint-disable react/no-string-refs */
-import React from 'react';
+import * as React from 'react';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+
+import { withRouter } from 'react-router-dom';
+import type { RouterHistory } from 'react-router-dom';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-import '../../common/material-ui/assets/scss/material-dashboard-pro-react.scss';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -23,10 +25,10 @@ import AdminNavbar from '../../common/material-ui/components/Navbars/AdminNavbar
 import Footer from '../../common/material-ui/components/Footer/Footer';
 import Sidebar from '../../common/material-ui/components/Sidebar/Sidebar';
 
+import '../../common/material-ui/assets/scss/material-dashboard-pro-react.scss';
 
 let ps;
-
-const menuItems = [
+const menuItems: Array<any> = [
   {
     path: '/admin/dashboard',
     name: 'Dashboard',
@@ -46,23 +48,28 @@ const menuItems = [
   },
 ];
 
-function withMainLayout(WrappedComponent) {
-  class MainLayout extends React.Component {
-    static propTypes = {
-      classes: PropTypes.object.isRequired,
-    }
+function withMainLayout(WrappedComponent: React.ElementType) {
+  interface IProps {
+    classes: Object;
+    history: RouterHistory;
+    location: any;
+  }
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        mobileOpen: false,
-        miniActive: false,
-        image: sidebarImage,
-        color: 'blue',
-        bgColor: 'black',
-      };
-      this.resizeFunction = this.resizeFunction.bind(this);
-      this.sidebarMinimize = this.sidebarMinimize.bind(this);
+  interface IState {
+    mobileOpen: boolean;
+    miniActive: boolean;
+    image: any;
+    color: 'blue';
+    bgColor: 'black';
+  }
+
+  class MainLayout extends React.Component<IProps, IState> {
+    state = {
+      mobileOpen: false,
+      miniActive: false,
+      image: sidebarImage,
+      color: 'blue',
+      bgColor: 'black',
     }
 
     componentDidMount() {
@@ -71,12 +78,14 @@ function withMainLayout(WrappedComponent) {
           suppressScrollX: true,
           suppressScrollY: false,
         });
-        document.body.style.overflow = 'hidden';
+        if (document.body) {
+          document.body.style.overflow = 'hidden';
+        }
       }
-      window.addEventListener('resize', this.resizeFunction);
+      window.addEventListener('resize', this.resizeFunction.bind(this));
     }
 
-    componentDidUpdate(e) {
+    componentDidUpdate(e: IProps) {
       if (e.history.location.pathname !== e.location.pathname) {
         this.refs.mainPanel.scrollTop = 0;
         this.setMobileFlag();
@@ -87,7 +96,7 @@ function withMainLayout(WrappedComponent) {
       if (navigator.platform.indexOf('Win') > -1) {
         ps.destroy();
       }
-      window.removeEventListener('resize', this.resizeFunction);
+      window.removeEventListener('resize', this.resizeFunction.bind(this));
     }
 
     /**
