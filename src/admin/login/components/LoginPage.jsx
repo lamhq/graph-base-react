@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { compose } from 'redux';
+import { SubmissionError } from 'redux-form';
 
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // core components
-import GridItem from '../../../common/material-ui/components/Grid/GridItem';
 import Card from '../../../common/material-ui/components/Card/Card';
 import CardBody from '../../../common/material-ui/components/Card/CardBody';
 import CardHeader from '../../../common/material-ui/components/Card/CardHeader';
@@ -34,30 +34,36 @@ function LoginPage(props) {
     };
   });
 
-  function handleSubmit(values) {
-    console.log(values);
-    login(values);
+  async function handleSubmit(values) {
+    try {
+      await login(values);
+    } catch (error) {
+      // if form submission error
+      throw new SubmissionError({
+        email: 'Email is invalid',
+        password: 'Password is wrong',
+        _error: error.message,
+      });
+    }
   }
 
   return (
-    <GridItem xs={12} sm={6} md={4}>
-      <Card login className={classes[cardAnimaton]}>
-        <CardHeader
-          className={`${classes.cardHeader} ${classes.textCenter}`}
-          color="rose"
-        >
-          <h4 className={classes.cardTitle}>Log in</h4>
-        </CardHeader>
-        <CardBody>
-          <LoginForm onSubmit={handleSubmit} />
-        </CardBody>
-        <CardFooter className={classes.justifyContentCenter}>
-          <Button type="submit" form="loginForm" color="rose" simple size="lg" block>
-            Login
-          </Button>
-        </CardFooter>
-      </Card>
-    </GridItem>
+    <Card login className={classes[cardAnimaton]}>
+      <CardHeader
+        className={`${classes.cardHeader} ${classes.textCenter}`}
+        color="rose"
+      >
+        <h4 className={classes.cardTitle}>Log in</h4>
+      </CardHeader>
+      <CardBody>
+        <LoginForm onSubmit={handleSubmit} />
+      </CardBody>
+      <CardFooter className={classes.justifyContentCenter}>
+        <Button type="submit" form="loginForm" color="rose" simple size="lg" block>
+          Login
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }
 
