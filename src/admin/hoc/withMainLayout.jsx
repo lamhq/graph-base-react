@@ -59,8 +59,8 @@ function withMainLayout(WrappedComponent: React.ElementType) {
     mobileOpen: boolean;
     miniActive: boolean;
     image: any;
-    color: 'blue';
-    bgColor: 'black';
+    color: "blue";
+    bgColor: "black";
   }
 
   class MainLayout extends React.Component<IProps, IState> {
@@ -70,7 +70,7 @@ function withMainLayout(WrappedComponent: React.ElementType) {
       image: sidebarImage,
       color: 'blue',
       bgColor: 'black',
-    }
+    };
 
     componentDidMount() {
       if (navigator.platform.indexOf('Win') > -1) {
@@ -117,9 +117,7 @@ function withMainLayout(WrappedComponent: React.ElementType) {
           if (collapseActiveRoute !== activeRoute) {
             return collapseActiveRoute;
           }
-        } else if (
-          window.location.href.indexOf(routes[i].path) !== -1
-        ) {
+        } else if (window.location.href.indexOf(routes[i].path) !== -1) {
           return routes[i].name;
         }
       }
@@ -143,15 +141,13 @@ function withMainLayout(WrappedComponent: React.ElementType) {
     render() {
       const { classes, ...rest } = this.props;
       const {
-        miniActive, mobileOpen, color, bgColor, image,
-      } = this.state;
-      const mainPanel = `${classes.mainPanel
-      } ${
-        cx({
-          [classes.mainPanelSidebarMini]: miniActive,
-          [classes.mainPanelWithPerfectScrollbar]:
-            navigator.platform.indexOf('Win') > -1,
-        })}`;
+ miniActive, mobileOpen, color, bgColor, image 
+} = this.state;
+      const mainPanel = `${classes.mainPanel} ${cx({
+        [classes.mainPanelSidebarMini]: miniActive,
+        [classes.mainPanelWithPerfectScrollbar]:
+          navigator.platform.indexOf('Win') > -1,
+      })}`;
       return (
         <div className={classes.wrapper}>
           <Sidebar
