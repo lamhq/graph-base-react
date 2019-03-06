@@ -1,5 +1,9 @@
 // @flow
-export function foo(x: ?number): string {
+import * as React from 'react';
+import { IGrapqQLErrors, IToken } from '../types';
+
+
+export function foo(x: ?number): string | number {
   if (x) {
     return x;
   }
@@ -10,7 +14,7 @@ export function foo(x: ?number): string {
  * Get error message to display to user from graphql error response
  * @param {Object} error
  */
-export function getErrorMessage(error: mixed) {
+export function getErrorMessage(error: IGrapqQLErrors) {
   if (error.graphQLErrors.length > 0) {
     return error.graphQLErrors[0].message;
   }
@@ -21,7 +25,7 @@ export function getErrorMessage(error: mixed) {
  * Get server's form validation error from graphql error response
  * @param {Object} error
  */
-export function getSubmissionErrors(error) {
+export function getSubmissionErrors(error: IGrapqQLErrors) {
   if (!error || error.graphQLErrors.length === 0) {
     return undefined;
   }
@@ -29,7 +33,7 @@ export function getSubmissionErrors(error) {
   return error.graphQLErrors[0].extensions.exception.inputErrors;
 }
 
-export function saveAccessToken(token) {
+export function saveAccessToken(token: string) {
   localStorage.setItem('token', JSON.stringify(token));
 }
 
@@ -42,7 +46,7 @@ export function getAccessToken() {
   return s ? JSON.parse(s) : null;
 }
 
-export function isAccessTokenValid(token) {
+export function isAccessTokenValid(token: IToken) {
   if (!token) return false;
   const { value, expireAt } = token;
   if (!value) return false;
@@ -59,6 +63,6 @@ export function isAccessTokenValid(token) {
  *
  * @param {Component} Component
  */
-export function getComponentName(Component) {
+export function getComponentName(Component: React.ElementType) {
   return Component.displayName || Component.name || 'Component';
 }

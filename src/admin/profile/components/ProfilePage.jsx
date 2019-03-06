@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import InputLabel from '@material-ui/core/InputLabel';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -17,9 +18,13 @@ import CardIcon from '../../../common/material-ui/components/Card/CardIcon';
 
 import { withMainLayout } from '../../hoc';
 
+import { IBaseProps } from '../../../common/types';
+
 import styles from './styles';
 
-function ProfilePage(props) {
+interface IProps extends IBaseProps {}
+
+function ProfilePage(props: IProps) {
   const { classes } = props;
   return (
     <div>
@@ -146,9 +151,5 @@ function ProfilePage(props) {
     </div>
   );
 }
-
-ProfilePage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withMainLayout(withStyles(styles)(ProfilePage));
