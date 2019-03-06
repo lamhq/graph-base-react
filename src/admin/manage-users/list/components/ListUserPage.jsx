@@ -8,13 +8,12 @@ import withStyle from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/AddSharp';
 
 // App commons
-import './ListUserPage.scss';
+import styles from './ListUserPage.styles';
 import withMainLayout from '../../../hoc/withMainLayout';
 
 // Material Components
 import Table from '../../../../common/material-ui/components/Table/Table';
 import Button from '../../../../common/material-ui/components/CustomButtons/Button';
-import extendedTablesStyle from '../../../../common/material-ui/assets/jss/material-dashboard-pro-react/views/extendedTablesStyle';
 import Card from '../../../../common/material-ui/components/Card/Card';
 import CardBody from '../../../../common/material-ui/components/Card/CardBody';
 import CardIcon from '../../../../common/material-ui/components/Card/CardIcon';
@@ -67,7 +66,7 @@ function ListUserPage({ ...props }) {
         open={isOpenModal}
         onClose={() => toggleModal(!isOpenModal)}
       />
-      <div className="flex-end">
+      <div className={classes.alignRight}>
         <Button
           style={{ backgroundColor: '#2ac1a8' }}
           onClick={() => toggleModal(true)}
@@ -97,7 +96,7 @@ function ListUserPage({ ...props }) {
           />
         </CardBody>
       </Card>
-      <div className="flex-end">
+      <div className={classes.alignRight}>
         <Paginations
           pages={[
             { text: 'PREV' },
@@ -120,5 +119,5 @@ ListUserPage.propTypes = {
 };
 export default compose(
   withMainLayout,
-  withStyle(extendedTablesStyle),
+  withStyle(styles),
 )(ListUserPage);
