@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { IGrapqQLErrors, IToken } from '../types';
+import { IGraphQLErrors, IToken } from '../types';
 
 
 export function foo(x: ?number): string | number {
@@ -14,7 +14,7 @@ export function foo(x: ?number): string | number {
  * Get error message to display to user from graphql error response
  * @param {Object} error
  */
-export function getErrorMessage(error: IGrapqQLErrors) {
+export function getErrorMessage(error: IGraphQLErrors) {
   if (error.graphQLErrors.length > 0) {
     return error.graphQLErrors[0].message;
   }
@@ -25,7 +25,7 @@ export function getErrorMessage(error: IGrapqQLErrors) {
  * Get server's form validation error from graphql error response
  * @param {Object} error
  */
-export function getSubmissionErrors(error: IGrapqQLErrors) {
+export function getSubmissionErrors(error: IGraphQLErrors) {
   if (!error || error.graphQLErrors.length === 0) {
     return undefined;
   }

@@ -9,6 +9,8 @@ import pagesStyle from '../../common/material-ui/assets/jss/material-dashboard-p
 import GridContainer from '../../common/material-ui/components/Grid/GridContainer';
 import GridItem from '../../common/material-ui/components/Grid/GridItem';
 import { Provider as AlertProvider, Alert } from '../../common/alert';
+import GraphqlErrorBoundary from '../../common/GraphqlErrorBoundary/GraphqlErrorBoundary';
+
 import login from '../../common/material-ui/assets/img/login.jpeg';
 
 function withGuestLayout(WrappedComponent: React.ElementType) {
@@ -30,20 +32,22 @@ function withGuestLayout(WrappedComponent: React.ElementType) {
       const { classes, ...rest } = this.props;
       return (
         <AlertProvider>
-          <div className={classes.wrapper}>
-            <Alert />
-            <div
-              className={classes.fullPage}
-              style={{ backgroundImage: `url(${this.getBgImage()})` }}
-            />
-            <div className={classes.topLayer}>
-              <GridContainer className={classes.container} justify="center">
-                <GridItem xs={12} sm={6} md={4}>
-                  <WrappedComponent {...rest} />
-                </GridItem>
-              </GridContainer>
+          <GraphqlErrorBoundary>
+            <div className={classes.wrapper}>
+              <Alert />
+              <div
+                className={classes.fullPage}
+                style={{ backgroundImage: `url(${this.getBgImage()})` }}
+              />
+              <div className={classes.topLayer}>
+                <GridContainer className={classes.container} justify="center">
+                  <GridItem xs={12} sm={6} md={4}>
+                    <WrappedComponent {...rest} />
+                  </GridItem>
+                </GridContainer>
+              </div>
             </div>
-          </div>
+          </GraphqlErrorBoundary>
         </AlertProvider>
       );
     }
