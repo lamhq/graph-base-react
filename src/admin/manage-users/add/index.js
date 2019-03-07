@@ -1,3 +1,3 @@
-import AddUserPage from './components/AddUserPage';
+import AddUserModal from './components/AddUserModal';
 
-export default AddUserPage;
+export default AddUserModal;

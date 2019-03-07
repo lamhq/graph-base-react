@@ -1,4 +1,4 @@
-import { grayColor } from "../../material-dashboard-pro-react.jsx";
+import { grayColor } from "../material-dashboard-pro-react.jsx";
 
 const modalStyle = theme => ({
   modalRoot: {

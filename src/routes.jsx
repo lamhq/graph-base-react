@@ -47,7 +47,7 @@ const routes = [
   },
   {
     path: '/admin/users',
-    name: 'profile',
+    name: 'user-list',
     component: ListUserPage,
   },
 ];
