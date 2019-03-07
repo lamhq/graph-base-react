@@ -1,6 +1,6 @@
 import userProfileStyles from '../../../../common/material-ui/assets/jss/material-dashboard-pro-react/views/userProfileStyles';
 
-const viewUserPage = {
+const editUserPage = {
   ...userProfileStyles,
   headerContainer: {
     display: 'flex',
@@ -24,11 +24,13 @@ const viewUserPage = {
     '& label': {
       fontSize: 12,
     },
-    '& info': {
-      fontSize: 14,
-      margin: '0',
-    },
+  },
+  formControl: {
+    paddingTop: 0,
+  },
+  selectMenu: {
+    fontSize: 14,
   },
 };
 
-export default viewUserPage;
+export default editUserPage;

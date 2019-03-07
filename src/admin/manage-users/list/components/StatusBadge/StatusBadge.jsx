@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './StatusButton.scss';
+import './StatusBadge.scss';
 
 // Status
 const STATUS = {
@@ -23,18 +23,22 @@ const STATUS = {
 };
 
 function StatusBadge(props) {
-  const { label } = props;
+  const { label, className } = props;
   return (
-    <div className={`status-badge ${STATUS[label].className}`}>{label}</div>
+    <div className={`status-badge ${className} ${STATUS[label].className}`}>
+      {label}
+    </div>
   );
 }
 
 StatusBadge.defaultProps = {
   label: '',
+  className: '',
 };
 
 StatusBadge.propTypes = {
   label: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default React.memo(StatusBadge);
