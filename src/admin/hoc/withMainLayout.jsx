@@ -24,6 +24,7 @@ import logo from '../../common/material-ui/assets/img/logo-white.svg';
 import AdminNavbar from '../../common/material-ui/components/Navbars/AdminNavbar';
 import Footer from '../../common/material-ui/components/Footer/Footer';
 import Sidebar from '../../common/material-ui/components/Sidebar/Sidebar';
+import { Provider as AlertProvider, Alert } from '../../common/alert';
 
 import '../../common/material-ui/assets/scss/material-dashboard-pro-react.scss';
 
@@ -149,38 +150,41 @@ function withMainLayout(WrappedComponent: React.ElementType) {
           navigator.platform.indexOf('Win') > -1,
       })}`;
       return (
-        <div className={classes.wrapper}>
-          <Sidebar
-            routes={menuItems}
-            logoText="Creative Tim"
-            logo={logo}
-            image={image}
-            handleDrawerToggle={this.handleDrawerToggle}
-            open={mobileOpen}
-            color={color}
-            bgColor={bgColor}
-            miniActive={miniActive}
-            {...rest}
-          />
-
-          <div className={mainPanel} ref="mainPanel">
-            <AdminNavbar
-              sidebarMinimize={this.sidebarMinimize}
-              miniActive={miniActive}
-              brandText={this.getActiveRoute(menuItems)}
+        <AlertProvider>
+          <Alert />
+          <div className={classes.wrapper}>
+            <Sidebar
+              routes={menuItems}
+              logoText="Creative Tim"
+              logo={logo}
+              image={image}
               handleDrawerToggle={this.handleDrawerToggle}
+              open={mobileOpen}
+              color={color}
+              bgColor={bgColor}
+              miniActive={miniActive}
               {...rest}
             />
 
-            <div className={classes.content}>
-              <div className={classes.container}>
-                <WrappedComponent {...rest} />
-              </div>
-            </div>
+            <div className={mainPanel} ref="mainPanel">
+              <AdminNavbar
+                sidebarMinimize={this.sidebarMinimize}
+                miniActive={miniActive}
+                brandText={this.getActiveRoute(menuItems)}
+                handleDrawerToggle={this.handleDrawerToggle}
+                {...rest}
+              />
 
-            {<Footer fluid />}
+              <div className={classes.content}>
+                <div className={classes.container}>
+                  <WrappedComponent {...rest} />
+                </div>
+              </div>
+
+              {<Footer fluid />}
+            </div>
           </div>
-        </div>
+        </AlertProvider>
       );
     }
   }

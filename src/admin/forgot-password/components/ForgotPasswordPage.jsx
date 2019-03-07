@@ -8,7 +8,6 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Email from '@material-ui/icons/Email';
 
-import GridItem from '../../../common/material-ui/components/Grid/GridItem';
 import Card from '../../../common/material-ui/components/Card/Card';
 import CardBody from '../../../common/material-ui/components/Card/CardBody';
 import CardHeader from '../../../common/material-ui/components/Card/CardHeader';
@@ -21,7 +20,7 @@ import { IBaseProps } from '../../../common/types';
 
 import styles from './styles';
 
-interface IProps extends IBaseProps {}
+interface IProps extends IBaseProps { }
 
 function ForgotPasswordPage(props: IProps) {
   const [cardAnimation, setCardAnimation] = React.useState('cardHidden');
@@ -60,52 +59,50 @@ function ForgotPasswordPage(props: IProps) {
 
   const { classes } = props;
   return (
-    <GridItem xs={12} sm={6} md={4}>
-      <form>
-        <Card login className={classes[cardAnimation]}>
-          <CardHeader
-            className={`${classes.cardHeader} ${classes.textCenter}`}
-            color="primary"
-          >
-            <div className={classes.socialLine}>
-              <Button
-                justIcon
-                round
-                color="#000"
-                className={classes.goBackButton}
-              >
-                <i className="fab material-icons">arrow_back</i>
-              </Button>
-            </div>
-            <h4 className={classes.cardTitle}>Forgot Password</h4>
-          </CardHeader>
-          <CardBody className={classes.cardBody}>
-            <CustomInput
-              labelText="Email"
-              id="email"
-              formControlProps={{
-                fullWidth: true,
-              }}
-              inputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Email className={classes.inputAdornmentIcon} />
-                  </InputAdornment>
-                ),
-              }}
-            />
+    <form>
+      <Card login className={classes[cardAnimation]}>
+        <CardHeader
+          className={`${classes.cardHeader} ${classes.textCenter}`}
+          color="primary"
+        >
+          <div className={classes.socialLine}>
             <Button
-              color="success"
-              className={`${classes.marginRight} ${classes.resetButton}`}
-              onClick={handleSendResetPassword}
+              justIcon
+              round
+              color="#000"
+              className={classes.goBackButton}
             >
-              Reset Password
+              <i className="fab material-icons">arrow_back</i>
             </Button>
-          </CardBody>
-        </Card>
-      </form>
+          </div>
+          <h4 className={classes.cardTitle}>Forgot Password</h4>
+        </CardHeader>
+        <CardBody className={classes.cardBody}>
+          <CustomInput
+            labelText="Email"
+            id="email"
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Email className={classes.inputAdornmentIcon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Button
+            color="success"
+            className={`${classes.marginRight} ${classes.resetButton}`}
+            onClick={handleSendResetPassword}
+          >
+            Reset Password
+          </Button>
+        </CardBody>
+      </Card>
       {alert}
-    </GridItem>
+    </form>
   );
 }
 
