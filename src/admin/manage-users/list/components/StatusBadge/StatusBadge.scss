@@ -1,0 +1,38 @@
+$orange: #fda362;
+$grey: #828282;
+$green: #2ac1a8;
+
+.status-badge {
+  padding: 3px 5px;
+  border-radius: 50px;
+  width: 110px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+
+  &.suspended {
+    border: 1px solid $orange;
+    color: $orange;
+  }
+
+  &.active {
+    background-color: $green;
+    color: white;
+  }
+
+  &.inactive {
+    background-color: $grey;
+    color: white;
+  }
+
+  &.pending {
+    background-color: $orange;
+    color: white;
+  }
+
+  &.center-cell {
+    margin: auto;
+  }
+}

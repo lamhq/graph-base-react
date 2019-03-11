@@ -21,7 +21,7 @@ import CardHeader from '../../../../common/material-ui/components/Card/CardHeade
 import Paginations from '../../../../common/material-ui/components/Pagination/Pagination';
 
 // Custom components
-import StatusBadge from './StatusButton/StatusBadge';
+import StatusBadge from './StatusBadge';
 import AddUserModal from '../../add/index';
 
 const TABLE_HEAD = ['First Name', 'Last Name', 'Email', 'User Role', 'Status'];
@@ -31,29 +31,35 @@ const DUMMY_DATA = [
     'Hudson',
     'email@gmail.com',
     'Admin',
-    <StatusBadge label="Suspended" />,
+    <StatusBadge className="center-cell" label="Suspended" />,
   ],
-  ['An', 'Tran', 'antran@gmail.com', 'User', <StatusBadge label="Active" />],
+  [
+    'An',
+    'Tran',
+    'antran@gmail.com',
+    'User',
+    <StatusBadge className="center-cell" label="Active" />,
+  ],
   [
     'Trinh',
     'Nguyen',
     'trinhnguyen@gmail.com',
     'User',
-    <StatusBadge label="Inactive" />,
+    <StatusBadge className="center-cell" label="Inactive" />,
   ],
   [
     'Lam',
     'Huynh',
     'lamhuynh@gmail.com',
     'User',
-    <StatusBadge label="Pending" />,
+    <StatusBadge className="center-cell" label="Pending" />,
   ],
   [
     'Calvin',
     'Lawrence',
     'calvin@gmail.com',
     'User',
-    <StatusBadge label="Suspended" />,
+    <StatusBadge className="center-cell" label="Suspended" />,
   ],
 ];
 
