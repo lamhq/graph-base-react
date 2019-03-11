@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { compose } from 'redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { SubmissionError } from 'redux-form';
-
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -20,6 +18,7 @@ import LoginForm from './LoginForm';
 import loginPageStyle from '../../../common/material-ui/assets/jss/material-dashboard-pro-react/views/loginPageStyle';
 import { withGuestLayout } from '../../hoc';
 import { withIdentity } from '../../../common/identity';
+import { withGraph } from '../../../common/graphql';
 
 function LoginPage(props) {
   const [cardAnimaton, setCardAnimaton] = useState('cardHidden');
@@ -43,8 +42,8 @@ function LoginPage(props) {
     try {
       const resp = await mutate({ variables: values });
       const data = resp.data.login;
-      setIdentity(data.user, { value: data.value, expireAt: data.expireAt });
       setRedirect(true);
+      setIdentity(data.user, { value: data.value, expireAt: data.expireAt });
     } catch (error) {
       // if form submission error
       throw new SubmissionError({
@@ -58,6 +57,10 @@ function LoginPage(props) {
   const { from } = location.state || { from: { pathname: '/' } };
   if (redirectToReferrer) return <Redirect to={from} />;
 
+  const initValues = {
+    email: 'john@mailinator.com',
+    password: '1',
+  };
   return (
     <Card login className={classes[cardAnimaton]}>
       <CardHeader
@@ -67,7 +70,7 @@ function LoginPage(props) {
         <h4 className={classes.cardTitle}>Log in</h4>
       </CardHeader>
       <CardBody>
-        <LoginForm onSubmit={handleSubmit} />
+        <LoginForm onSubmit={handleSubmit} initialValues={initValues} />
       </CardBody>
       <CardFooter className={classes.justifyContentCenter}>
         <Button type="submit" form="loginForm" color="rose" simple size="lg" block>
@@ -90,20 +93,18 @@ export default compose(
   withStyles(loginPageStyle),
   withIdentity('admin'),
   withRouter,
-  graphql(
-    gql`
-      mutation login($email: String, $password: String){
-        login(email: $email, password: $password) {
-          value
-          expireAt
-          user {
-            id
-            email
-            firstname
-            lastname
-          }
+  withGraph(gql`
+    mutation login($email: String, $password: String){
+      login(email: $email, password: $password) {
+        value
+        expireAt
+        user {
+          id
+          email
+          firstname
+          lastname
         }
       }
-    `,
-  ),
+    }
+  `),
 )(LoginPage);

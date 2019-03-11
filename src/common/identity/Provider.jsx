@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import IdentityContext from './context';
+import { IdentitiesContext } from './contexts';
 import { saveIdentity, loadIdentity } from './utils';
 
 function Provider({ children }) {
@@ -30,9 +30,9 @@ function Provider({ children }) {
   };
 
   return (
-    <IdentityContext.Provider value={context}>
+    <IdentitiesContext.Provider value={context}>
       {children}
-    </IdentityContext.Provider>
+    </IdentitiesContext.Provider>
   );
 }
 
