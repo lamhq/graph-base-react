@@ -4,3 +4,4 @@ docs/_book
 dist/
 yarn-error.log
 package-lock.json
+.DS_Store
