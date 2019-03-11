@@ -17,4 +17,21 @@ export function isValidIdentity(identity) {
   return true;
 }
 
-export default null;
+/**
+ * Save identity to local storage
+ *
+ * @param {Object} value
+ */
+export function saveIdentity(value) {
+  window.localStorage.setItem('identity', JSON.stringify(value));
+}
+
+/**
+ * Load identity from local storage
+ *
+ * @returns {Object}
+ */
+export function loadIdentity() {
+  const str = window.localStorage.getItem('identity');
+  return str === null ? {} : JSON.parse(str);
+}

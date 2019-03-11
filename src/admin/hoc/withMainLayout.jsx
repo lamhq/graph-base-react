@@ -27,6 +27,7 @@ import Sidebar from '../../common/material-ui/components/Sidebar/Sidebar';
 import { Provider as AlertProvider, Alert } from '../../common/alert';
 
 import '../../common/material-ui/assets/scss/material-dashboard-pro-react.scss';
+import { withIdentity } from '../../common/identity';
 
 let ps;
 const menuItems: Array<any> = [
@@ -142,8 +143,8 @@ function withMainLayout(WrappedComponent: React.ElementType) {
     render() {
       const { classes, ...rest } = this.props;
       const {
- miniActive, mobileOpen, color, bgColor, image 
-} = this.state;
+        miniActive, mobileOpen, color, bgColor, image,
+      } = this.state;
       const mainPanel = `${classes.mainPanel} ${cx({
         [classes.mainPanelSidebarMini]: miniActive,
         [classes.mainPanelWithPerfectScrollbar]:
@@ -193,6 +194,7 @@ function withMainLayout(WrappedComponent: React.ElementType) {
   return compose(
     withRouter,
     withStyles(appStyle),
+    withIdentity('admin', '/admin/login'),
   )(MainLayout);
 }
 export default withMainLayout;

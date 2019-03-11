@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { compose } from 'redux';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { NavLink } from "react-router-dom";
@@ -21,6 +22,7 @@ import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
 import sidebarStyle from "../../assets/jss/material-dashboard-pro-react/components/sidebarStyle.jsx";
 
 import avatar from "../../assets/img/faces/avatar.jpg";
+import { withIdentity } from '../../../identity';
 
 var ps;
 
@@ -301,7 +303,9 @@ class Sidebar extends React.Component {
       logoText,
       routes,
       bgColor,
-      rtlActive
+      rtlActive,
+      clearIdentity,
+      identity: { data: userData },
     } = this.props;
     const itemText =
       classes.itemText +
@@ -359,7 +363,7 @@ class Sidebar extends React.Component {
               onClick={() => this.openCollapse("openAvatar")}
             >
               <ListItemText
-                primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
+                primary={rtlActive ? "تانيا أندرو" : `${userData.firstname} ${userData.lastname}`}
                 secondary={
                   <b
                     className={
@@ -397,11 +401,12 @@ class Sidebar extends React.Component {
                   </NavLink>
                 </ListItem>
                 <ListItem className={classes.collapseItem}>
-                  <NavLink
-                    to="#"
+                  <a
+                    href="javascript:void(0)"
                     className={
                       classes.itemLink + " " + classes.userCollapseLinks
                     }
+                    onClick={clearIdentity}
                   >
                     <span className={collapseItemMini}>
                       {rtlActive ? "و" : "L"}
@@ -411,7 +416,7 @@ class Sidebar extends React.Component {
                       disableTypography={true}
                       className={collapseItemText}
                     />
-                  </NavLink>
+                  </a>
                 </ListItem>
               </List>
             </Collapse>
@@ -552,7 +557,11 @@ Sidebar.propTypes = {
   logo: PropTypes.string,
   logoText: PropTypes.string,
   image: PropTypes.string,
-  routes: PropTypes.arrayOf(PropTypes.object)
+  routes: PropTypes.arrayOf(PropTypes.object),
+  clearIdentity: PropTypes.func.isRequired,
 };
 
-export default withStyles(sidebarStyle)(Sidebar);
+export default compose(
+  withStyles(sidebarStyle),
+  withIdentity('admin'),
+)(Sidebar);

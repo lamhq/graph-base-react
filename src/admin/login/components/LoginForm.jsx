@@ -44,6 +44,7 @@ function LoginForm(props) {
           fullWidth: true,
         }}
         inputProps={{
+          type: 'password',
           endAdornment: (
             <InputAdornment position="end">
               <Icon className={classes.inputAdornmentIcon}>
